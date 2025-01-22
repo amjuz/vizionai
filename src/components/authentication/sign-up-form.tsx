@@ -15,6 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useId, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { signup } from "@/app/actions/auth-actions";
+import { redirect } from "next/navigation";
 
 const passwordValidationRegex =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -42,6 +47,8 @@ const formSchema = z
   });
 
 function SignUpForm({ className }: { className?: string }) {
+  const [loading, setLoading] = useState(false);
+  const signupToastId = useId();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     // mode:"onBlur",
@@ -49,12 +56,34 @@ function SignUpForm({ className }: { className?: string }) {
       name: "",
       email: "",
       password: "",
-      confirmPassword:""
+      confirmPassword: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setLoading(true);
+    toast.loading("Signing up", { id: signupToastId });
+
+    const signUpFormData = new FormData();
+
+    signUpFormData.append("name", values.name);
+    signUpFormData.append("email", values.email);
+    signUpFormData.append("password", values.password);
+
+    const { error, success } = await signup(signUpFormData);
+
+    if (!success) {
+      setLoading(false);
+      console.log(error)
+      toast.error(String(error), { id: signupToastId });
+      return
+    } else {
+      setLoading(false);
+      toast.success("Sign up successful! Please confirm your email address.",{id: signupToastId})
+    }
+
+    redirect('/dashboard')
   }
 
   return (
@@ -123,8 +152,9 @@ function SignUpForm({ className }: { className?: string }) {
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
-            Submit
+          <Button className="w-full" type="submit" disabled={loading}>
+            {loading && <Loader2 className="animate-spin h-4 w-4 mr-2" />}Sign
+            up
           </Button>
         </form>
       </Form>

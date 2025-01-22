@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 interface AuthResponse {
   error: null | string;
@@ -41,4 +42,12 @@ export async function signin(formData: FormData): Promise<AuthResponse> {
     error: error?.message || "there was an error signing up!",
     success: !error,
   };
+}
+
+export async function signout(): Promise<void> {
+  const supabase = await createClient();
+
+  await supabase.auth.signOut({});
+
+  redirect("/auth");
 }

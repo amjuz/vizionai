@@ -1,15 +1,17 @@
 import Image from "next/image";
 import AuthImg from "@/public/Abstract Curves and Colors.jpeg";
 import Logo from "@/components/Logo";
-import AuthForm from "@/components/authentication/auth-form";
 
-export default async function AuthenticationPage() {
-
+export default async function AuthenticationLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main className="h-screen grid grid-cols-2 ">
       <div className="relative w-full flex  p-10 flex-col bg-muted text-primary-foreground">
-        <div className="absolute w-full  h-[30%] top-0 left-0 z-10 bg-gradient-to-t from-transparent to-black"/>
-        <div className="absolute w-full  h-[30%] bottom-0 left-0 z-10 bg-gradient-to-b from-transparent to-black"/>
+        <div className="absolute w-full  h-[30%] top-0 left-0 z-10 bg-gradient-to-t from-transparent to-black" />
+        <div className="absolute w-full  h-[30%] bottom-0 left-0 z-10 bg-gradient-to-b from-transparent to-black" />
         <Image
           fill
           src={AuthImg}
@@ -33,20 +35,7 @@ export default async function AuthenticationPage() {
         </div>
       </div>
       <div className="relative flex flex-col items-center justify-center p-8 h-full w-full">
-        <div className="max-w-xl w-[350px] mx-auto ">
-          <AuthForm />
-          {/* <div className="flex justify-between text-center">
-            <Link
-              className={buttonVariants({ variant: "link" })}
-              href={"/auth?type=signup"}
-            >
-              signUp
-            </Link>
-            <Link className={buttonVariants({ variant: "link" })} href={""}>
-              forgot password
-            </Link>
-          </div> */}
-        </div>
+        <div className="max-w-xl w-[350px] mx-auto ">{children}</div>
       </div>
     </main>
   );

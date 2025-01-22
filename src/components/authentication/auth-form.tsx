@@ -2,25 +2,20 @@
 
 import { useState } from "react";
 import LoginForm from "./login-form";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import SignUpForm from "./sign-up-form";
 import ResetPassword from "./reset-password";
 import Link from "next/link";
 
 export type TAuthPage = "signin" | "signup" | "forgot-pass";
 
-// interface IAuthForm {
-//   authType: TAuthPage;
-// }
-
 export default function AuthForm() {
+
   const [authType, setAuthType] = useState<TAuthPage>("signin");
+
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6">
       <div className="flex flex-col space-y-2 text-center">
-        {authType === "signin" && (
-          <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-        )}
         {authType === "signup" && (
           <h1 className="text-2xl font-semibold tracking-tight">SignUp</h1>
         )}
@@ -39,9 +34,10 @@ export default function AuthForm() {
           variant={"link"}
           className="p-0 "
           onClick={() => {
-            authType === "signin"
-              ? setAuthType("signup")
-              : setAuthType("signin");
+            setAuthType((prev)=> {
+              if(prev === 'signin' || prev === 'forgot-pass') return 'signup'
+              return 'signin'
+            })
           }}
         >
           {authType === "signin"
@@ -56,7 +52,7 @@ export default function AuthForm() {
               setAuthType("forgot-pass");
             }}
           >
-            {"forgot pass"}
+            forgot password ?
           </Button>
         )}
       </div>

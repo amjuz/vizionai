@@ -43,7 +43,7 @@ function ResetPassword({ className }: { className?: string }) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Username</FormLabel>
+                <FormLabel className="font-semibold">Email</FormLabel>
                 <FormControl>
                   <Input placeholder="user@email.com" {...field} />
                 </FormControl>

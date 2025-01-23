@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// export function isProd() {
-//   if (process.env.NODE_ENV === "production") return true;
-//   if (process.env.NODE_ENV === "development") return false;
-// }
+export const isProd = () => {
+  return process.env.NODE_ENV === "production";
+}

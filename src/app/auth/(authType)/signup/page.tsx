@@ -7,9 +7,9 @@ export default function page() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Signup</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your email below to login to your account
+          Enter details below to create to your account
         </p>
       </div>
       <SignUpForm />

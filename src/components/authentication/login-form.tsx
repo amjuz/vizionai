@@ -17,8 +17,9 @@ import { cn } from "@/lib/utils";
 import { signin } from "@/app/actions/auth-actions";
 import { toast } from "sonner";
 import { useId, useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import PrefillButton from "@/lib/helper/PrefillButton";
 
 const formSchema = z.object({
   username: z.string().email({ message: "Should be a valid email" }),
@@ -31,6 +32,7 @@ type TFormSchema = z.infer<typeof formSchema>;
 
 function LoginForm({ className }: { className?: string }) {
   const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   const signInId = useId();
 
@@ -62,7 +64,8 @@ function LoginForm({ className }: { className?: string }) {
       setIsPending(false);
       toast.success("Signin in complete", { id: signInId });
       toast.dismiss();
-      redirect("/dashboard");
+
+      router.push("/dashboard");
     }
   }
 
@@ -75,7 +78,10 @@ function LoginForm({ className }: { className?: string }) {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Username</FormLabel>
+                <div className="flex justify-between items-center">
+                  <FormLabel className="font-semibold">Username</FormLabel>
+                  <PrefillButton form={form} />
+                </div>
                 <FormControl>
                   <Input placeholder="user@email.com" {...field} />
                 </FormControl>
@@ -102,7 +108,7 @@ function LoginForm({ className }: { className?: string }) {
           />
           <Button className="w-full" type="submit" disabled={isPending}>
             {isPending && <Loader2 className="animate-spin mr-2 h-4 w-4" />}
-            Submit
+            Signin
           </Button>
         </form>
       </Form>

@@ -39,7 +39,7 @@ export async function signin(formData: FormData): Promise<AuthResponse> {
 
   return {
     data,
-    error: error?.message || "there was an error signing up!",
+    error: error?.message ?? null,
     success: !error,
   };
 }

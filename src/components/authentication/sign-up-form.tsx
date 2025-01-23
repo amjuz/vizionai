@@ -82,7 +82,7 @@ function SignUpForm({ className }: { className?: string }) {
       toast.success("Sign up successful! Please confirm your email address.",{id: signupToastId})
     }
 
-    redirect('/dashboard')
+    redirect('/auth/signin')
   }
 
   return (

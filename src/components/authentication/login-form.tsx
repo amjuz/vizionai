@@ -46,21 +46,21 @@ function LoginForm({ className }: { className?: string }) {
 
   async function onSubmit(values: TFormSchema) {
     setIsPending(true);
-    console.log(values);
+    // console.log(values);
 
     const signInFormData = new FormData();
 
     signInFormData.append("email", values.username);
     signInFormData.append("password", values.password);
 
-    const { data } = await signin(signInFormData);
+    const { error, success } = await signin(signInFormData);
 
-    if (!data) {
+    if (!success) {
       setIsPending(false);
-      toast.error("Login failed, please try again", { id: signInId });
+      toast.error(`${error}`, { id: signInId });
       return;
     } else {
-      console.log("data:", data);
+      // console.log("data:", data);
       setIsPending(false);
       toast.success("Signin in complete", { id: signInId });
       toast.dismiss();

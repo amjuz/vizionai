@@ -1,6 +1,6 @@
 import Image from "next/image";
 import AuthImg from "@/public/Abstract Curves and Colors.jpeg";
-import Logo from "@/components/Logo";
+import Logo from "@/components/layout-dashboard/Logo";
 
 export default async function AuthenticationLayout({
   children,

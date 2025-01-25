@@ -1,4 +1,4 @@
-import { generateImageAction } from "@/app/actions/image-action";
+import { generateImageAction, storeImages } from "@/app/actions/image-action";
 import { TImageGenerationValidator } from "@/components/image-generation/Configuration";
 import { create } from "zustand";
 
@@ -29,11 +29,15 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
 
       const dataWithUrl = newData.map(url=> {
         return {
-          url
+          url,
+          ...values
         }
       })
 
       set({ images: dataWithUrl, loading: false });
+
+      await storeImages(dataWithUrl)
+      
     } catch (e) {
       console.log(e);
       

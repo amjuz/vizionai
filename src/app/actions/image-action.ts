@@ -1,7 +1,11 @@
 "use server";
 
+// import { imageMeta } from "image-meta";
 import { TImageGenerationValidator } from "@/components/image-generation/Configuration";
+import { createClient } from "@/lib/supabase/server";
+import { Database } from "@/types/database.types";
 import Replicate from "replicate";
+// import { randomUUID } from "crypto";
 
 interface ImageResponse {
   error: string | null;
@@ -44,7 +48,7 @@ export async function generateImageAction(
     };
   } catch (error) {
     return {
-      //@ts-expect-error error happens due to incorrect type inference, need to refactor  
+      //@ts-expect-error error happens due to incorrect type inference, need to refactor
       error: error.message | null,
       success: false,
       data: null,
@@ -52,20 +56,50 @@ export async function generateImageAction(
   }
 }
 
+export async function imgUrlToBlob(url: string) {
+  const response = fetch(url);
+  const blob = (await response).blob();
+  return (await blob).arrayBuffer();
+}
 
-// export async function storeImage(data) {
-//   const supabase = await createClient();
+type storeImageInput = {
+  url: string;
+} & Database["public"]["Tables"]["generated_images"]["Insert"];
 
-//   const {
-//     data: { user },
-//     error,
-//   } = await supabase.auth.getUser();
+export async function storeImages(data: storeImageInput[]) {
+  const supabase = await createClient();
 
-//   if (!user) {
-//     return {
-//       error: "Unauthorized",
-//       success: false,
-//       data: null,
-//     };
-//   }
-// }
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      error: "Unauthorized",
+      success: false,
+      data: null,
+    };
+  }
+
+  console.log(data);
+  
+  // const uploadResults = [];
+
+  // for (const img of data) {
+  //   const arrayBuffer = await imgUrlToBlob(img.url);
+  //   const { height, width, type } = imageMeta(new Uint8Array(arrayBuffer));
+
+  //   const fileName = `image_${randomUUID()}.${type}`;
+  //   const filePath = `${user.id}/${fileName}`;
+
+    // const { data: insertImageResponseData, error: insertImageError } = await supabase.storage.
+    //   .from("generated_images")
+    //   .insert(data);
+  
+    //   if(error) {
+    //     return
+    //   }
+    
+  // }
+
+}

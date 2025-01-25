@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "../utils";
 import { UseFormReturn } from "react-hook-form";
 
-function PrefillButton({
+function SigninPrefillButton({
   form,
 }: {
   form: UseFormReturn<
@@ -29,4 +29,4 @@ function PrefillButton({
   );
 }
 
-export default PrefillButton;
+export default SigninPrefillButton;

@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import PrefillButton from "@/lib/helper/PrefillButton";
+import SigninPrefillButton from "@/lib/helper/SigninPrefillButton";
 
 const formSchema = z.object({
   username: z.string().email({ message: "Should be a valid email" }),
@@ -80,7 +80,7 @@ function LoginForm({ className }: { className?: string }) {
               <FormItem>
                 <div className="flex justify-between items-center">
                   <FormLabel className="font-semibold">Username</FormLabel>
-                  <PrefillButton form={form} />
+                  <SigninPrefillButton form={form} />
                 </div>
                 <FormControl>
                   <Input placeholder="user@email.com" {...field} />

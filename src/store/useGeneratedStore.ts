@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 interface GenerateState {
   loading: boolean;
-  images: Array<{ url: string }> ;
+  images: Array<{ url: string }>;
   error: string | null;
   generateImage: (values: TImageGenerationValidator) => Promise<void>;
 }
@@ -19,29 +19,27 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
 
     try {
       const { data, error, success } = await generateImageAction(values);
-      console.log({data,error,success});
-      
+      console.log({ data, error, success });
+
       if (!success) {
         set({ error, loading: false });
       }
 
-      const newData: string[] = data as string[]
+      const newData: string[] = data as string[];
 
-      const dataWithUrl = newData.map(url=> {
+      const dataWithUrl = newData.map((url) => {
         return {
           url,
-          ...values
-        }
-      })
+          ...values,
+        };
+      });
 
       set({ images: dataWithUrl, loading: false });
 
-      await storeImages(dataWithUrl)
-      
+      await storeImages(dataWithUrl);
     } catch (e) {
       console.log(e);
-      
-      console.error(e);
+
       set({
         error: "Failed to generate image. Please try again.",
         loading: false,

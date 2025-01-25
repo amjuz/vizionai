@@ -19,6 +19,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/actions/auth-actions";
 import { redirect } from "next/navigation";
+import SignupPrefillButton from "@/lib/helper/SignupPrefillButton";
 
 const passwordValidationRegex =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -74,15 +75,17 @@ function SignUpForm({ className }: { className?: string }) {
 
     if (!success) {
       setLoading(false);
-      console.log(error)
+      console.log(error);
       toast.error(String(error), { id: signupToastId });
-      return
+      return;
     } else {
       setLoading(false);
-      toast.success("Sign up successful! Please confirm your email address.",{id: signupToastId})
+      toast.success("Sign up successful! Please confirm your email address.", {
+        id: signupToastId,
+      });
     }
 
-    redirect('/auth/signin')
+    redirect("/auth/signin");
   }
 
   return (
@@ -94,7 +97,10 @@ function SignUpForm({ className }: { className?: string }) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Name</FormLabel>
+                <div className="flex items-center justify-between">
+                  <FormLabel className="font-semibold">Name</FormLabel>
+                  <SignupPrefillButton form={form}/>
+                </div>
                 <FormControl>
                   <Input placeholder="Enter your name" {...field} />
                 </FormControl>

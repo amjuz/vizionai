@@ -1,11 +1,11 @@
 "use server";
 
-// import { imageMeta } from "image-meta";
+import { imageMeta } from "image-meta";
 import { TImageGenerationValidator } from "@/components/image-generation/Configuration";
 import { createClient } from "@/lib/supabase/server";
 import { Database } from "@/types/database.types";
+import { randomUUID } from "crypto";
 import Replicate from "replicate";
-// import { randomUUID } from "crypto";
 
 interface ImageResponse {
   error: string | null;
@@ -40,6 +40,13 @@ export async function generateImageAction(
     });
 
     // console.log(output);
+    if (!output) {
+      return {
+        error: "Image generation api error",
+        success: false,
+        data: output,
+      };
+    }
 
     return {
       error: null,
@@ -62,6 +69,13 @@ export async function imgUrlToBlob(url: string) {
   return (await blob).arrayBuffer();
 }
 
+type TUploadResults = {
+  fileName: string;
+  error: string;
+  success: boolean;
+  data: unknown | null;
+};
+
 type storeImageInput = {
   url: string;
 } & Database["public"]["Tables"]["generated_images"]["Insert"];
@@ -70,7 +84,7 @@ export async function storeImages(data: storeImageInput[]) {
   const supabase = await createClient();
 
   const {
-    data: { user }
+    data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
@@ -81,25 +95,67 @@ export async function storeImages(data: storeImageInput[]) {
     };
   }
 
-  console.log(data);
+  const uploadResults: TUploadResults[] = [];
+
+  for (const img of data) {
+    const arrayBuffer = await imgUrlToBlob(img.url);
+    const { height, width, type } = imageMeta(new Uint8Array(arrayBuffer));
+
+    const fileName = `image_${randomUUID()}.${type}`;
+    const filePath = `${user.id}/${fileName}`;
+
+    const { error: storageError } = await supabase.storage
+      .from("generated_images_bucket")
+      .upload(filePath, arrayBuffer, {
+        contentType: `image/${type}`,
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (storageError) {
+      uploadResults.push({
+        fileName,
+        error: `S3 bucket Store Error: ${storageError.message}`,
+        success: false,
+        data: null,
+      });
+      continue;
+    }
+
+    const { data: dbData, error: dbError } = await supabase
+      .from("generated_images")
+      .insert({
+        user_id: user.id,
+        model: img.model,
+        aspect_ratio: img.aspect_ratio,
+        created_at: img.created_at,
+        guidance: img.guidance,
+        image_name: img.image_name,
+        num_inference_steps: img.num_inference_steps,
+        output_format: img.output_format,
+        prompt: img.prompt,
+        height,
+        width,
+      })
+      .select();
+
+    if (dbError) {
+      uploadResults.push({
+        fileName,
+        error: `Database Error: ${dbError.message}`,
+        success: false,
+        data: dbData || null,
+      });
+    }
+  }
+
+  console.log('upload results', uploadResults);
   
-  // const uploadResults = [];
-
-  // for (const img of data) {
-  //   const arrayBuffer = await imgUrlToBlob(img.url);
-  //   const { height, width, type } = imageMeta(new Uint8Array(arrayBuffer));
-
-  //   const fileName = `image_${randomUUID()}.${type}`;
-  //   const filePath = `${user.id}/${fileName}`;
-
-    // const { data: insertImageResponseData, error: insertImageError } = await supabase.storage.
-    //   .from("generated_images")
-    //   .insert(data);
-  
-    //   if(error) {
-    //     return
-    //   }
-    
-  // }
-
+  return {
+    error: null,
+    success: true,
+    data: {
+      results: uploadResults,
+    },
+  };
 }

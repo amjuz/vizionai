@@ -6,6 +6,9 @@ import { createClient } from "@/lib/supabase/server";
 import { Database } from "@/types/database.types";
 import { randomUUID } from "crypto";
 import Replicate from "replicate";
+import { ActionResponse } from "@/lib/helper/actions";
+import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
+import { revalidatePath } from "next/cache";
 
 interface ImageResponse {
   error: string | null;
@@ -130,7 +133,7 @@ export async function storeImages(data: storeImageInput[]) {
         aspect_ratio: img.aspect_ratio,
         created_at: img.created_at,
         guidance: img.guidance,
-        image_name: img.image_name,
+        image_name: fileName,
         num_inference_steps: img.num_inference_steps,
         output_format: img.output_format,
         prompt: img.prompt,
@@ -149,13 +152,132 @@ export async function storeImages(data: storeImageInput[]) {
     }
   }
 
-  console.log('upload results', uploadResults);
-  
+  console.log("s3 upload results", uploadResults);
+
   return {
     error: null,
     success: true,
     data: {
       results: uploadResults,
     },
+  };
+}
+
+export async function getImages(limit?: number): Promise<ActionResponse> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      error: "Unauthorized",
+      success: false,
+      data: null,
+    };
+  }
+
+  let query = supabase
+    .from("generated_images")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (limit) {
+    query = query.limit(limit);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    return {
+      error: error.message,
+      success: false,
+      data: null,
+    };
+  }
+
+  const imageWithUrl = await Promise.all(
+    data.map(
+      async (
+        image: Database["public"]["Tables"]["generated_images"]["Row"]
+      ) => {
+        const { data, error } = await supabase.storage
+          .from("generated_images_bucket")
+          .createSignedUrl(`${user.id}/${image.image_name}`, 3600);
+
+        if (error) {
+          console.log(`failed to  create signed url for ${image.id}`);
+        }
+        return {
+          ...image,
+          url: data?.signedUrl,
+        };
+      }
+    )
+  );
+
+  return {
+    error: null,
+    success: true,
+    data: imageWithUrl || null,
+  };
+}
+
+export async function deleteImageAction(
+  id: TGeneratedImageID,
+  name: TGeneratedImageName
+): Promise<ActionResponse> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      error: "Unauthorized",
+      success: false,
+      data: null,
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("generated_images")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log(
+      `Failed to delete image { id: ${id} } of user :${user.id}`,
+      error.message
+    );
+    return {
+      data: null,
+      error: error.message,
+      success: false,
+    };
+  }
+
+  // const { data: DataRemoveImageFromS3, error: ErrorRemoveImageFromS3 } =
+  const deleteFroms3 =
+    await supabase.storage
+      .from("generated_images_bucket")
+      .remove([`${user.id}/${name}`]);
+
+      console.log(deleteFroms3)
+  // if (ErrorRemoveImageFromS3) {
+  //   console.log(
+  //     `Failed to remove image with name: ${name} of user : ${user.id} from s# bucket`
+  //   );
+  // }
+
+  revalidatePath("/gallery");
+
+  return {
+    data,
+    error: null,
+    success: true,
   };
 }

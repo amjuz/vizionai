@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "../utils";
+import { cn } from "../../utils";
 import { UseFormReturn } from "react-hook-form";
 
 function SignupPrefillButton({

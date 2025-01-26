@@ -19,5 +19,9 @@ for insert
 to public
 with check (((bucket_id = 'generated_images_bucket'::text) AND (( SELECT (auth.uid())::text AS uid) = (storage.foldername(name))[1])));
 
+CREATE POLICY "Give users access to own folder n1g4dk_2" ON storage.objects
+FOR DELETE
+TO authenticated
+USING ((bucket_id = 'generated_images'::text) AND ((SELECT (auth.uid())::text AS uid) = (storage.foldername(name))[1]));
 
 

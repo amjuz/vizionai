@@ -19,7 +19,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/actions/auth-actions";
 import { redirect } from "next/navigation";
-import SignupPrefillButton from "@/lib/helper/SignupPrefillButton";
+import SignupPrefillButton from "@/lib/helper/components/SignupPrefillButton";
 
 const passwordValidationRegex =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;

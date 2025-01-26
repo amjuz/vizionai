@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import SigninPrefillButton from "@/lib/helper/SigninPrefillButton";
+import SigninPrefillButton from "@/lib/helper/components/SigninPrefillButton";
 
 const formSchema = z.object({
   username: z.string().email({ message: "Should be a valid email" }),

@@ -2,7 +2,7 @@
 insert into storage.buckets
   (id, name, file_size_limit)
 values
-  ('generated_images_bucket', 'generated_images_bucket', 50);
+  ('generated_images_bucket', 'generated_images_bucket',  52428800);
 
 create policy "Give users access to own folder n1g4dk_0"  
 on "storage"."objects"
@@ -19,9 +19,12 @@ for insert
 to public
 with check (((bucket_id = 'generated_images_bucket'::text) AND (( SELECT (auth.uid())::text AS uid) = (storage.foldername(name))[1])));
 
-CREATE POLICY "Give users access to own folder n1g4dk_2" ON storage.objects
-FOR DELETE
+create policy "Give users access to own folder n1g4dk_2" 
+on "storage"."objects"
+for delete
 TO authenticated
-USING ((bucket_id = 'generated_images'::text) AND ((SELECT (auth.uid())::text AS uid) = (storage.foldername(name))[1]));
+USING (
+  (bucket_id = 'generated_images_bucket'::text) AND ((SELECT (auth.uid())::text AS uid) = (storage.foldername(name))[1])
+);
 
 

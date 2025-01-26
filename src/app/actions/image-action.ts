@@ -260,18 +260,16 @@ export async function deleteImageAction(
     };
   }
 
-  // const { data: DataRemoveImageFromS3, error: ErrorRemoveImageFromS3 } =
-  const deleteFroms3 =
+  const { data: DataRemoveImageFromS3, error: ErrorRemoveImageFromS3 } =
     await supabase.storage
       .from("generated_images_bucket")
       .remove([`${user.id}/${name}`]);
 
-      console.log(deleteFroms3)
-  // if (ErrorRemoveImageFromS3) {
-  //   console.log(
-  //     `Failed to remove image with name: ${name} of user : ${user.id} from s# bucket`
-  //   );
-  // }
+  if (ErrorRemoveImageFromS3) {
+    console.log(
+      `Failed to remove image with name: ${name} of user : ${user.id} from s# bucket`
+    );
+  }
 
   revalidatePath("/gallery");
 

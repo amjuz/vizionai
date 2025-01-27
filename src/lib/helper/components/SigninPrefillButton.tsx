@@ -20,7 +20,7 @@ function SigninPrefillButton({
       variant={"link"}
       className={cn("")}
       onClick={async () => {
-        form.setValue("username", "test@mail.com", { shouldValidate: true });
+        form.setValue("username", "test@gmail.com", { shouldValidate: true });
         form.setValue("password", "1Aa#saasa", { shouldValidate: true });
       }}
     >

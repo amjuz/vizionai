@@ -22,10 +22,17 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
     },
   });
 
+  if (error) {
+    return {
+      data: null,
+      error: "Signup failed please try again",
+      success: false,
+    };
+  }
   return {
     data,
-    error: error?.message || "there was an error signing up!",
-    success: !error,
+    error: null,
+    success: true,
   };
 }
 

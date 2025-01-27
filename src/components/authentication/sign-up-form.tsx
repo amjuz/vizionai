@@ -18,8 +18,8 @@ import { useId, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/actions/auth-actions";
-import { redirect } from "next/navigation";
 import SignupPrefillButton from "@/lib/helper/components/SignupPrefillButton";
+import { useRouter } from "next/navigation";
 
 const passwordValidationRegex =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -47,6 +47,8 @@ const formSchema = z
   });
 
 function SignUpForm({ className }: { className?: string }) {
+  const router = useRouter()
+
   const [loading, setLoading] = useState(false);
   const signupToastId = useId();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,21 +73,20 @@ function SignUpForm({ className }: { className?: string }) {
     signUpFormData.append("email", values.email);
     signUpFormData.append("password", values.password);
 
-    const { error, success } = await signup(signUpFormData);
+    const { error } = await signup(signUpFormData);
 
-    if (!success) {
+    if (error) {
       setLoading(false);
-      console.log(error);
-      toast.error(String(error), { id: signupToastId });
-      return;
-    } else {
-      setLoading(false);
-      toast.success("Sign up successful! Please confirm your email address.", {
-        id: signupToastId,
-      });
+      toast.error(error, { id: signupToastId });
+      return ;
     }
 
-    redirect("/auth/signin");
+    setLoading(false);
+    toast.success("Sign up successful! Please confirm your email address.", {
+      id: signupToastId,
+    });
+
+    router.push("/auth/signin");
   }
 
   return (
@@ -99,7 +100,7 @@ function SignUpForm({ className }: { className?: string }) {
               <FormItem>
                 <div className="flex items-center justify-between">
                   <FormLabel className="font-semibold">Name</FormLabel>
-                  <SignupPrefillButton form={form}/>
+                  <SignupPrefillButton form={form} />
                 </div>
                 <FormControl>
                   <Input placeholder="Enter your name" {...field} />

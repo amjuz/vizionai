@@ -20,7 +20,7 @@ function SignupPrefillButton({
       className={cn("")}
       onClick={async () => {
         form.setValue("name", "test profile", { shouldValidate: true });
-        form.setValue("email", "test@mail.com", { shouldValidate: true });
+        form.setValue("email", "test@gmail.com", { shouldValidate: true });
         form.setValue("password", "1Aa#saasa", { shouldValidate: true });
         form.setValue("confirmPassword", "1Aa#saasa", { shouldValidate: true });
       }}

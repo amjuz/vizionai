@@ -60,6 +60,9 @@ function ModelTrainingForm() {
       const res = await urlResponse.json();
       // console.log(res);
 
+      toast.success("File upload successful!", { id: toastId });
+      toast.loading("Training model...", { id: "loadingID" });
+
       const formData = new FormData();
       formData.append("fileKey", res.Key);
       formData.append("modelName", values.modelName);
@@ -75,15 +78,17 @@ function ModelTrainingForm() {
         throw new Error(apiResponseJson.error || "Failed to train model!");
       }
 
-      toast.success("File upload successful!", { id: toastId });
+      toast.dismiss("loadingID");
+      toast.success(
+        "Training started successfully. You will receive a notification once it gets completed",
+        { id: toastId }
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to start training";
       toast.error(errorMessage, { id: toastId, duration: 5000 });
+      toast.dismiss("loadingID");
     }
-
-    toast.success("Upload complete!", { id: toastId });
-    // console.log(values);
   }
 
   return (

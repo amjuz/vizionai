@@ -43,6 +43,7 @@ export async function generateImageAction(
     });
 
     // console.log(output);
+    
     if (!output) {
       return {
         error: "Image generation api error",
@@ -56,7 +57,7 @@ export async function generateImageAction(
       success: true,
       data: output,
     };
-  } catch (error) {
+  } catch (error) {    
     return {
       //@ts-expect-error error happens due to incorrect type inference, need to refactor
       error: error.message | null,

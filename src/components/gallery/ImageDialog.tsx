@@ -37,7 +37,7 @@ function ImageDialog({ image, onClose }: ImageDialogProps) {
         // clean up
 
         link.parentNode?.removeChild(link);
-      }).catch(error => console.log(error) )
+      }).catch(error => console.log("Failed to download image",error) )
   }
   return (
     <Sheet open onOpenChange={onClose}>

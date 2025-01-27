@@ -18,9 +18,8 @@ export type TModelTrainingForm = {
     {
       modelName: string;
       gender: "male" | "female";
-      zipFile?: any;
+      zipFile?: File;
     },
-    any,
     undefined
   >;
 };
@@ -40,7 +39,7 @@ function ModelTrainingForm() {
       // console.log("signed url :", data?.signedUrlData?.signedUrl);
 
       if (data?.error) {
-        toast.error(`Failed to upload data. Please try again!` || data.error, {
+        toast.error(`Failed to upload data. Please try again!`, {
           id: toastId,
         });
       }

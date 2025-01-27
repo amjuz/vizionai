@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
 
+const SITE_URL = process.env.SITE_URL 
+
 export async function POST(request: NextRequest) {
   try {
     const replicate = new Replicate({
@@ -54,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     console.log(fileUrl);
 
-    // HARDWARE AVAILABLE
+    // AVAILABLE HARDWARE LIST
     // const hardware = await replicate.hardware.list()
     // console.log(hardware);
 
@@ -81,6 +83,8 @@ export async function POST(request: NextRequest) {
           input_images: fileUrl.signedUrl,
           trigger_word: "ohwx",
         },
+        webhook: `${SITE_URL}/api/webhooks/train`,
+        webhook_events_filter: ["start", "completed"],
       }
     );
 

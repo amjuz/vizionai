@@ -33,13 +33,13 @@ const DeleteImageComponent = ({
 
   const handleDelete = async () => {
     toast.loading("Deleting the image...", { id: toastId });
-    const { error, data } = await deleteImageAction(imageId, imageName);
+    const { error } = await deleteImageAction(imageId, imageName);
     if (error) {
       toast.error(error, { id: toastId });
     }
     toast.success("Image deleted successfully!", { id: toastId });
     onDelete?.();
-    console.log("deleted data:", data);
+    // console.log("deleted data:", data);
   };
   return (
     <AlertDialog>

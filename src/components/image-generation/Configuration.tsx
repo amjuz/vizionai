@@ -75,7 +75,7 @@ export const ImageGenerationValidator = z.object({
 const Configuration = () => {
 
   const generateImage = useGeneratedStore(state=> state.generateImage)
-  const loading = useGeneratedStore(state=> state.loading)
+  // const loading = useGeneratedStore(state=> state.loading)
   
   const form = useForm<TImageGenerationValidator>({
     resolver: zodResolver(ImageGenerationValidator),
@@ -112,7 +112,7 @@ const Configuration = () => {
 
   async function onSubmit(values: TImageGenerationValidator) {
     // console.log(values);
-    const res = await generateImage(values);
+    await generateImage(values);
     // console.log("res:", res);
   }
 

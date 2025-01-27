@@ -30,8 +30,10 @@ function ResetPassword({ className }: { className?: string }) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function onSubmit(
+    // values: z.infer<typeof formSchema>
+  ) {
+    // console.log(values);
   }
 
   return (

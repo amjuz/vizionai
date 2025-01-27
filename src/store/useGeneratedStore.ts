@@ -1,6 +1,5 @@
 import { generateImageAction, storeImages } from "@/app/actions/image-action";
 import { TImageGenerationValidator } from "@/components/image-generation/Configuration";
-import { useId } from "react";
 import { toast } from "sonner";
 import { create } from "zustand";
 
@@ -47,7 +46,7 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
       await storeImages(dataWithUrl);
       toast.success("Image stored Successfully!");
     } catch (e) {
-      console.log(e);
+      console.log('Failed to generate image');
 
       set({
         error: "Failed to generate image. Please try again.",

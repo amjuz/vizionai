@@ -261,7 +261,7 @@ export async function deleteImageAction(
     };
   }
 
-  const { data: DataRemoveImageFromS3, error: ErrorRemoveImageFromS3 } =
+  const { error: ErrorRemoveImageFromS3 } =
     await supabase.storage
       .from("generated_images_bucket")
       .remove([`${user.id}/${name}`]);

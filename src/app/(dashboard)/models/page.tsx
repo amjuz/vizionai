@@ -1,8 +1,10 @@
 import { fetchModel } from "@/app/actions/model-actions"
 import ModelList from "@/components/models/form/model-list"
 
-const Models = async () => {
+const page = async () => {
   const data = await fetchModel()
+  // console.log(data);
+  
     return (
       <section className="container mx-auto">
         <div className="mb-8">
@@ -16,4 +18,4 @@ const Models = async () => {
     )
   }
   
-  export default Models
+  export default page

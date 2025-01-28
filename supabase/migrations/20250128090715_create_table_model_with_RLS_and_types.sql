@@ -1,4 +1,4 @@
-create type "public"."gender" as enum ('MALE', 'FEMALE');
+create type "public"."gender" as enum ('male', 'female');
 
 create type "public"."training_status" as enum ('STARTING', 'PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED');
 
@@ -13,7 +13,7 @@ create table "public"."models" (
     "training_status" training_status,
     "training_steps" numeric default '0'::numeric,
     "training_time" text,
-    "gender" gender default 'MALE'::gender,
+    "gender" gender default 'male'::gender,
     "training_id" text
 );
 

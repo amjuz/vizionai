@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
 
-const SITE_URL = process.env.SITE_URL 
+const SITE_URL = process.env.SITE_URL;
 
 export async function POST(request: NextRequest) {
   try {
@@ -88,12 +88,39 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    console.log("training", training);
+    if (training.error) {
+      return NextResponse.json({
+        error: "Failed to train model, Try again later!",
+      });
+    }
+    // console.log("training", training);
+    const { error, data } = await supabaseAdminClient
+      .from("models")
+      // @ts-expect-error  typescript inference error
+      .insert({
+        model_id: modelId,
+        user_id: user.id,
+        model_name: input.modelName,
+        gender: input.gender,
+        training_status: training.status,
+        trigger_word: "ohwx",
+        training_steps: 1200,
+        training_id: training.id,
+      });
+
+    if (error) {
+      throw new Error(
+        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be store as soon as possible"
+      );
+    }
+
+    console.log("db response for insert operation on models table: ", data);
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
     console.error("Training Error:", error);
 
+    // figure out replicate api error and handle the error accordingly
     const errorMessage =
       error instanceof Error
         ? error.message

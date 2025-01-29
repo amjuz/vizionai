@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   AlertDialog,
@@ -26,22 +26,20 @@ const ModelListAlertDialog = ({
   const toastId = useId();
   const handleDeleteModel = async (
     id: number,
-    model_version: string | null,
-    model_id: string | null
+    model_id: string,
+    model_version?: string,
   ) => {
     toast.loading("Deleting Model", { id: toastId });
 
-    const { error, success } = await deleteModel(
-      id,
-      model_id ?? "",
-      model_version ?? ""
-    );
+    const { error, success } = await deleteModel(id, model_id, model_version ?? null);
 
     if (error || !success) {
       toast.error("Failed to delete model, Please try again!", { id: toastId });
+      return;
     }
     toast.success("Model deleted successfully!", { id: toastId });
   };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -65,11 +63,13 @@ const ModelListAlertDialog = ({
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() =>
-              handleDeleteModel(data.id, data.version, data.model_id)
+              handleDeleteModel(
+                data.id,
+                data.model_id ?? ""
+              )
             }
             className="bg-destructive hover:bg-destructive/90"
           >
-            {/* check this delete action tommorow */}
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -9,15 +9,8 @@ import {
 import { Database } from "@/types/database.types";
 import Link from "next/link";
 import { formatDistance } from "date-fns";
-import {
-  CheckCircle2,
-  Clock,
-  Loader2,
-  User2,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, Clock, Loader2, User2, XCircle } from "lucide-react";
 import ModelListAlertDialog from "../model-list-alert-dialog";
-
 
 type TModelList = {
   data: Database["public"]["Tables"]["models"]["Row"][] | null;
@@ -30,7 +23,6 @@ export interface IModelList {
 }
 function ModelList({ models }: IModelList) {
   const { data } = models;
-  // console.log(data);
 
   if (!data?.length) {
     return (
@@ -48,12 +40,15 @@ function ModelList({ models }: IModelList) {
   }
   return (
     <div className="grid gap-6 grid-cols-3">
-      {data.map((model,index) => (
-        <Card className="relative flex flex-col overflow-hidden" key={`${index}`}>
+      {data.map((model, index) => (
+        <Card
+        className="relative flex flex-col overflow-hidden"
+        key={`${index}`}
+        >
+          {/* {model.model_id} */}
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>{model.model_name}</CardTitle>
-
+              <CardTitle className="">{model.model_name}</CardTitle>
               <div className="flex items-center gap-2">
                 {model.training_status === "succeeded" ? (
                   <div className="flex items-center gap-1 text-sm text-green-500">
@@ -72,8 +67,14 @@ function ModelList({ models }: IModelList) {
                     <span className="capitalize">Training</span>
                   </div>
                 )}
+                {/* @TODO the below component requires refactor as delete model action is currently broken, 
+                       
+                    ISSUE: Model cannot be deleted as it needs the versionId, currently we are unable
+                    to get the correct version from REPLICATE API  
+                    
+                 */}
+                {/* <ModelListAlertDialog data={model} /> */}
               </div>
-              <ModelListAlertDialog data={model}/>
             </div>
 
             <CardDescription>
@@ -86,7 +87,7 @@ function ModelList({ models }: IModelList) {
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-lg bg-muted px-3 py-2 ">
-                    <div className="flex items-center g2\ text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="w-4 h-4" />
                       <span>Training Duration</span>
                     </div>
@@ -96,11 +97,11 @@ function ModelList({ models }: IModelList) {
                   </div>
 
                   <div className="rounded-lg bg-muted px-3 py-2 ">
-                    <div className="flex items-center g2\ text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <User2 className="w-4 h-4" />
                       <span>Gender</span>
                     </div>
-                    <p className="mt-1 font-medium">{model.gender} mins</p>
+                    <p className="mt-1 font-medium">{model.gender}</p>
                   </div>
                 </div>
               </div>

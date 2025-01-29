@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
         webhook_events_filter: ["start", "completed"],
       }
     );
-
+    
     if (training.error) {
       return NextResponse.json({
         error: "Failed to train model, Try again later!",
@@ -106,6 +106,7 @@ export async function POST(request: NextRequest) {
         trigger_word: "ohwx",
         training_steps: 1200,
         training_id: training.id,
+        version: training.version
       });
 
     if (error) {

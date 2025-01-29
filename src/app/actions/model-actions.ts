@@ -67,8 +67,11 @@ export async function fetchModel() {
 export async function deleteModel(
   id: number,
   model_id: string,
-  model_version: string
+  model_version: string | null,
 ) {
+  // console.log("version", model_version);
+  // console.log("id", model_id);
+
   const supabase = await createClient();
 
   if (model_version) {
@@ -84,7 +87,13 @@ export async function deleteModel(
       );
 
       if (!res.ok) {
-        throw new Error("Failed to delete model version from Replicate");
+        // throw new Error("Failed to delete model version from Replicate");
+
+        console.log("replicate api failed", await res.json());
+        return {
+          error: "Failed to delete model version from replicate",
+          success: false,
+        };
       }
     } catch (error) {
       console.error("Failed to delete model version from replicate:", error);
@@ -109,10 +118,15 @@ export async function deleteModel(
       );
 
       if (!res.ok) {
-        throw new Error("Failed to delete model from Replicate");
+        console.log("replicate api failed", await res.json());
+        // throw new Error("Failed to delete model from Replicate");
+        return {
+          error: "Failed to delete model version from replicate",
+          success: false,
+        };
       }
     } catch (error) {
-      console.error("Failed to delete model from replicate:", error);
+      console.log("Failed to delete model from replicate:", error);
 
       return {
         error: "Failed to delete model from replicate",
@@ -135,13 +149,13 @@ export async function deleteModel(
       success: true,
     };
   } catch (error) {
-    console.error(
+    console.log(
       "Failed to delete model from database, Please try again",
       error
     );
 
     return {
-      error: error,
+      error: "Failed to delete model version from replicate",
       success: false,
     };
   }

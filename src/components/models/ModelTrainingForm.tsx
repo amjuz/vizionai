@@ -60,7 +60,7 @@ function ModelTrainingForm() {
       // console.log(res);
 
       toast.success("File upload successful!", { id: toastId });
-      toast.loading("Training model...", { id: "loadingID" });
+      toast.loading("Initiating model training...", { id: "loadingID" });
 
       const formData = new FormData();
       formData.append("fileKey", res.Key);

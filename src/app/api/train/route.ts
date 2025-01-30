@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
 
-const SITE_URL = process.env.SITE_URL;
+const DOMAIN = process.env.DOMAIN;
 
 export async function POST(request: NextRequest) {
   try {
@@ -83,11 +83,15 @@ export async function POST(request: NextRequest) {
           input_images: fileUrl.signedUrl,
           trigger_word: "ohwx",
         },
-        webhook: `${SITE_URL}/api/webhooks/train`,
+        webhook: `${DOMAIN}/api/webhooks/train?userId=${
+          user.id
+        }&modelName=${encodeURIComponent(
+          input.modelName
+        )}&fileName=${encodeURIComponent(fileName)}`,
         webhook_events_filter: ["start", "completed"],
       }
     );
-    
+
     if (training.error) {
       return NextResponse.json({
         error: "Failed to train model, Try again later!",
@@ -106,7 +110,7 @@ export async function POST(request: NextRequest) {
         trigger_word: "ohwx",
         training_steps: 1200,
         training_id: training.id,
-        version: training.version
+        // version: training.version,
       });
 
     if (error) {

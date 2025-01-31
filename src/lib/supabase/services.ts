@@ -9,37 +9,74 @@ export async function updateModelStatus({
   training_time,
   version,
   userId,
-  model_name,
+  modelId,
 }: {
   training_status: TGeneratedModelTrainingStatus;
   training_time?: TGeneratedModelTrainingTime;
   version?: string;
   userId: string;
-  model_name: string;
+  modelId: string;
 }) {
   if (!training_time || !version) {
-    await supabaseAdminClient
+    console.log(
+      "reached inside first First try block of updating status model"
+    );
+
+    try {
+      const { data, error } = await supabaseAdminClient
+        .from("models")
+        .update({
+          training_status,
+        })
+        .eq("user_id", userId)
+        .eq("model_id", modelId);
+
+      if (error) {
+        console.log("Failed to update model status in database", error);
+      } else if (data) {
+        console.log("update model status successful", data);
+      }
+      return;
+    } catch (error) {
+      console.log("Something went wrong", error);
+      return;
+    }
+  }
+
+  console.log("skipped First try block of updating status model");
+  try {
+    const { data, error } = await supabaseAdminClient
       .from("models")
       .update({
         training_status,
+        training_time,
+        version,
       })
       .eq("user_id", userId)
-      .eq("model_name", model_name);
+      .eq("model_id", modelId);
 
-      return 
+    if (error) {
+      console.log("Failed to update model status in database", error);
+    } else if (data) {
+      console.log("update model status successful", data);
+    }
+
+    return;
+  } catch (error) {
+    console.log("Something went wrong", error);
+    return;
   }
-  
-  await supabaseAdminClient
-    .from("models")
-    .update({
-      training_status,
-      training_time,
-      version,
-    })
-    .eq("user_id", userId)
-    .eq("model_name", model_name);
 }
 
 export async function DeleteTrainingDataFromS3Bucket(filePath: string) {
-  await supabaseAdminClient.storage.from("training_data").remove([filePath]);
+  const { data, error } = await supabaseAdminClient.storage
+    .from("training_data_bucket")
+    .remove([filePath]);
+
+  if (error) {
+    console.log("Failed to delete data from s3 ", error);
+  } else if (data) {
+    console.log("Delete complete");
+  }
+  return;
 }

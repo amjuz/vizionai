@@ -20,8 +20,9 @@ export async function sendEmail({
     react: emailTemplate,
   });
 
-  return {
-    data,
-    error,
-  };
+  if (error || !data) {
+    console.log("Email service failed");
+  } else if (data) {
+    console.log("Email service complete!");
+  }
 }

@@ -85,8 +85,8 @@ export async function POST(request: NextRequest) {
         },
         webhook: `${DOMAIN}/api/webhooks/train?userId=${
           user.id
-        }&modelName=${encodeURIComponent(
-          input.modelName
+        }&modelId=${encodeURIComponent(
+          modelId
         )}&fileName=${encodeURIComponent(fileName)}`,
         webhook_events_filter: ["start", "completed"],
       }

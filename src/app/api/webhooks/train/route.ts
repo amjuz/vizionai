@@ -95,10 +95,9 @@ export async function POST(request: NextRequest) {
           training_time: body.metrics?.total_time ?? null,
           version: body.output?.version.split(":")[1] ?? null,
           userId,
-          modelId: modelId
+          modelId: modelId,
         }),
       ]);
-      
     } else {
       // handle the failed and cancelled status
       console.log(
@@ -121,10 +120,9 @@ export async function POST(request: NextRequest) {
         updateModelStatus({
           training_status: body.status,
           userId,
-          modelId: modelId
+          modelId: modelId,
         }),
       ]);
-
     }
     // delete training data from s3bucket
 
@@ -139,6 +137,7 @@ export async function POST(request: NextRequest) {
     console.log(
       "---------------------------END WEBHOOK-----------------------------------"
     );
+
     return new NextResponse("Ok", { status: 200 });
   } catch (error) {
     console.log("Webhook processing error", error);

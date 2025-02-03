@@ -220,3 +220,11 @@ const faqsList = [
 - Join thousands of users who are already creating amazing AI-generated images.
 
 
+
+
+@TODO
+- delete model, button functionality
+- model training webhook refactor, read logs
+    - issue with s3 bucket deletion process,
+    - email service failure
+    

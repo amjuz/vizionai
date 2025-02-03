@@ -5,14 +5,19 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'replicate.delivery'
+        protocol: "https",
+        hostname: "replicate.delivery",
       },
       {
-        protocol: 'http',
-        hostname: '127.0.0.1'}
-    ]
-  }
+        protocol: "http",
+        hostname: "127.0.0.1",
+      },
+      {
+        protocol: "https",
+        hostname: "rpkmwxbndiagmwyvgewm.supabase.co"
+      }
+    ],
+  },
 };
 
 export default nextConfig;

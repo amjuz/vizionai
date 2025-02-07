@@ -31,18 +31,20 @@ import { Textarea } from "../ui/textarea";
 import { Info } from "lucide-react";
 import { useEffect } from "react";
 import { useGeneratedStore } from "@/store/useGeneratedStore";
+import { Tables } from "@/types/database.types";
 
 export type TImageGenerationValidator = z.infer<
   typeof ImageGenerationValidator
 >;
 
-const modelType = [
-  "black-forest-labs/flux-dev",
-  "black-forest-labs/flux-schnell",
-] as const;
+// const modelType = [
+//   "black-forest-labs/flux-dev",
+//   "black-forest-labs/flux-schnell",
+// ] as const;
 
 export const ImageGenerationValidator = z.object({
-  model: z.enum(modelType, { required_error: "Model is q required field" }),
+  model: z.string({ required_error: "Model is required!" }),
+  // enum(modelType, { required_error: "Model is required field" }),
   prompt: z.string({
     required_error: "Prompt is required!",
   }),
@@ -72,17 +74,21 @@ export const ImageGenerationValidator = z.object({
     }),
 });
 
-const Configuration = () => {
+interface IConfiguration {
+  userModels: Tables<"models">[];
+  modelId?: string;
+}
 
-  const generateImage = useGeneratedStore(state=> state.generateImage)
+const Configuration = ({ modelId, userModels }: IConfiguration) => {
+  const generateImage = useGeneratedStore((state) => state.generateImage);
   // const loading = useGeneratedStore(state=> state.loading)
-  
+
   const form = useForm<TImageGenerationValidator>({
     resolver: zodResolver(ImageGenerationValidator),
     defaultValues: {
       aspect_ratio: "1:1",
       guidance: 3.5,
-      model: "black-forest-labs/flux-schnell",
+      model: modelId ? `amjuz/${modelId}` : "black-forest-labs/flux-schnell",
       num_of_outputs: 1,
       output_format: "jpg",
       output_quality: 80,
@@ -112,10 +118,23 @@ const Configuration = () => {
 
   async function onSubmit(values: TImageGenerationValidator) {
     // console.log(values);
-    await generateImage(values);
+    const newValues = {
+      ...values,
+      prompt: values.model.startsWith("amjuz/")
+        ? (() => {
+            const modelId = values.model.replace("amjuz/", "").split(":")[0];
+            const selectedModel = userModels.find(
+              (model) => model.model_id === modelId
+            );
+            return `photo of a ${selectedModel?.trigger_word || "ohwx"} ${
+              selectedModel?.gender
+            }, ${values.prompt}`;
+          })()
+        : values.prompt,
+    } 
+    await generateImage(newValues);
     // console.log("res:", res);
   }
-
 
   return (
     <TooltipProvider>
@@ -155,6 +174,17 @@ const Configuration = () => {
                       <SelectItem value="black-forest-labs/flux-schnell">
                         Flux Schnell
                       </SelectItem>
+                      {userModels.map(
+                        (model) =>
+                          model.training_status === "succeeded" && (
+                            <SelectItem
+                              value={`amjuz/${model.model_id}:${model.version}`}
+                              key={model.id}
+                            >
+                              {model.model_name}
+                            </SelectItem>
+                          )
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

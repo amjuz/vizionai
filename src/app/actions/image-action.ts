@@ -16,26 +16,48 @@ interface ImageResponse {
   data: unknown | null;
 }
 
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
+  useFileOutput: false,
+});
+
 export async function generateImageAction(
   input: TImageGenerationValidator
 ): Promise<ImageResponse> {
-  const replicate = new Replicate({
-    auth: process.env.REPLICATE_API_TOKEN,
-    useFileOutput: false,
-  });
+  if (!process.env.REPLICATE_API_TOKEN) {
+    return {
+      error: "The replicate API token is not set",
+      data: null,
+      success: false,
+    };
+  }
 
-  const modelInput = {
-    prompt: input.prompt,
-    go_fast: true,
-    guidance: input.guidance,
-    megapixels: "1",
-    num_of_outputs: input.num_of_outputs,
-    aspect_ratio: input.aspect_ratio,
-    output_format: input.output_format,
-    output_quality: input.output_quality,
-    prompt_strength: 0.8,
-    num_inference_steps: input.num_inference_steps,
-  };
+  const modelInput = input.model.startsWith("amjuz/")
+    ? {
+        model: "dev",
+        prompt: input.prompt,
+        lora_scale: 1,
+        guidance: input.guidance,
+        num_of_outputs: input.num_of_outputs,
+        aspect_ratio: input.aspect_ratio,
+        output_format: input.output_format,
+        output_quality: input.output_quality,
+        prompt_strength: 0.8,
+        num_inference_steps: input.num_inference_steps,
+        extra_lora_scale: 0,
+      }
+    : {
+        prompt: input.prompt,
+        go_fast: true,
+        guidance: input.guidance,
+        megapixels: "1",
+        num_of_outputs: input.num_of_outputs,
+        aspect_ratio: input.aspect_ratio,
+        output_format: input.output_format,
+        output_quality: input.output_quality,
+        prompt_strength: 0.8,
+        num_inference_steps: input.num_inference_steps,
+      };
 
   try {
     const output = await replicate.run(input.model as `${string}/${string}`, {
@@ -43,7 +65,7 @@ export async function generateImageAction(
     });
 
     // console.log(output);
-    
+
     if (!output) {
       return {
         error: "Image generation api error",
@@ -57,7 +79,7 @@ export async function generateImageAction(
       success: true,
       data: output,
     };
-  } catch (error) {    
+  } catch (error) {
     return {
       //@ts-expect-error error happens due to incorrect type inference, need to refactor
       error: error.message | null,
@@ -261,10 +283,9 @@ export async function deleteImageAction(
     };
   }
 
-  const { error: ErrorRemoveImageFromS3 } =
-    await supabase.storage
-      .from("generated_images_bucket")
-      .remove([`${user.id}/${name}`]);
+  const { error: ErrorRemoveImageFromS3 } = await supabase.storage
+    .from("generated_images_bucket")
+    .remove([`${user.id}/${name}`]);
 
   if (ErrorRemoveImageFromS3) {
     console.log(

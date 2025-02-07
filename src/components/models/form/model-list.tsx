@@ -9,7 +9,15 @@ import {
 import { Database } from "@/types/database.types";
 import Link from "next/link";
 import { formatDistance } from "date-fns";
-import { CheckCircle2, Clock, Loader2, User2, XCircle } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Loader2,
+  User2,
+  XCircle,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type TModelList = {
   data: Database["public"]["Tables"]["models"]["Row"][] | null;
@@ -41,8 +49,8 @@ function ModelList({ models }: IModelList) {
     <div className="grid gap-6 grid-cols-3">
       {data.map((model, index) => (
         <Card
-        className="relative flex flex-col overflow-hidden"
-        key={`${index}`}
+          className="relative flex flex-col overflow-hidden"
+          key={`${index}`}
         >
           {/* {model.model_id} */}
           <CardHeader>
@@ -105,6 +113,28 @@ function ModelList({ models }: IModelList) {
                 </div>
               </div>
             </CardContent>
+            <div className="pt-4 ">
+              <Link
+                href={
+                  model.training_status === "succeeded"
+                    ? `/image-generation?model_id=${model.model_id}:${model.version}`
+                    : "#"
+                }
+                className={cn(
+                  "inline-flex w-full group",
+                  model.training_status !== "succeeded" &&
+                    "pointer-events-none opacity-50"
+                )}
+              >
+                <Button
+                  className="w-full group-hover:bg-primary/90"
+                  disabled={model.training_status !== "succeeded"}
+                >
+                  Generated Images
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
           </CardHeader>
         </Card>
       ))}

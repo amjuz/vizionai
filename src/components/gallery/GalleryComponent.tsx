@@ -23,7 +23,7 @@ function GalleryComponent({ images }: GalleryProps) {
   }
   return (
     <section className="container mx-auto py-8">
-      <div className="columns-4 g-4 space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {images.map((item, index) => (
           <div key={index}>
             <div
@@ -44,13 +44,18 @@ function GalleryComponent({ images }: GalleryProps) {
                 alt={item.prompt ?? ""}
                 width={item.width || 0}
                 height={item.width || 0}
+                className="rounded-lg"
               />
             </div>
           </div>
         ))}
       </div>
-      {selectedImage && <ImageDialog image={selectedImage} onClose={()=>setSelectedImage(null)}/>}
-      
+      {selectedImage && (
+        <ImageDialog
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
+      )}
     </section>
   );
 }

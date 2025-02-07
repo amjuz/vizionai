@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import Replicate from "replicate";
-import crypto from "crypto";
 import { validateWebhookSignature } from "@/lib/services/replicate";
 import { supabaseAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/services/resend";
+import { ORGANIZATION_EMAIL, sendEmail } from "@/lib/services/resend";
 import { TrainingStatusEmailTemplate } from "@/components/email-templates/training-status-email-template";
 import {
   DeleteTrainingDataFromS3Bucket,
   updateModelStatus,
 } from "@/lib/supabase/services";
-import { error } from "console";
 
 export async function POST(request: NextRequest) {
   try {
@@ -112,7 +109,7 @@ export async function POST(request: NextRequest) {
             userName,
             message: `Model Training ${body.status}`,
           }),
-          to: [userEmail],
+          to: [userEmail ?? ORGANIZATION_EMAIL],
           subject: `Your model training has been ${body.status}`,
         }),
 
@@ -138,7 +135,7 @@ export async function POST(request: NextRequest) {
       "---------------------------END WEBHOOK-----------------------------------"
     );
 
-    return new NextResponse("Ok", { status: 200 });
+     return new NextResponse("Ok", { status: 200 });
   } catch (error) {
     console.log("Webhook processing error", error);
     return new NextResponse("Internal server error", { status: 500 });

@@ -57,9 +57,8 @@ export async function validateWebhookSignature({
 
   console.log("Comparison completed! res:", isValid);
 
-  isValid
-    ? console.log("Signature validated successfully")
-    : console.log("Signature validation failed!");
+  if(isValid) console.log("Signature validated successfully")
+  else console.log("Signature validation failed!");
 
   return isValid;
 }

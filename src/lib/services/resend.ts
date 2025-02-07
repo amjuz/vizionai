@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-const ORGANIZATION_EMAIL = process.env.ORGANIZATION_EMAIL!;
+export const ORGANIZATION_EMAIL = process.env.ORGANIZATION_EMAIL!;
 
 export async function sendEmail({
   emailTemplate,

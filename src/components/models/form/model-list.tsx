@@ -10,7 +10,6 @@ import { Database } from "@/types/database.types";
 import Link from "next/link";
 import { formatDistance } from "date-fns";
 import { CheckCircle2, Clock, Loader2, User2, XCircle } from "lucide-react";
-import ModelListAlertDialog from "../model-list-alert-dialog";
 
 type TModelList = {
   data: Database["public"]["Tables"]["models"]["Row"][] | null;

@@ -18,7 +18,11 @@ const ModelNameInput = ({ form }: TModelTrainingForm) => {
         <FormItem>
           <FormLabel>Model Name</FormLabel>
           <FormControl>
-            <Input placeholder="Enter model name" {...field} />
+            <Input
+              placeholder="Enter model name"
+              {...field}
+              value={field.value}
+            />
           </FormControl>
           <FormDescription>
             This will be the name of your trained model.

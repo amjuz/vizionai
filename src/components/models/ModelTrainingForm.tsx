@@ -28,7 +28,9 @@ function ModelTrainingForm() {
   const toastId = useId();
   const form = useForm<TTrainModelValidator>({
     resolver: zodResolver(TrainModelValidator),
-    defaultValues: {},
+    defaultValues: {
+      modelName: ""
+    },
   });
 
   async function onSubmit(values: TTrainModelValidator) {

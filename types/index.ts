@@ -12,3 +12,10 @@ export type TGeneratedModelTrainingStatus =
 export type TGeneratedModelTrainingTime =
   Database["public"]["Tables"]["models"]["Row"]["training_time"];
 
+export type Table = Database['public']['Tables']
+
+export type Product = Table['products']['Row'] 
+
+export type Price = Table['prices']['Row'] 
+
+export type Subscription = Table['subscriptions']['Row'] 

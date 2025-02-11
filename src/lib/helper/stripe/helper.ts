@@ -1,7 +1,3 @@
-import { Tables } from "@/types/database.types";
-
-type Price = Tables<'prices'>;
-
 export const getURL = (path: string = '') => {
   // Check if NEXT_PUBLIC_SITE_URL is set and non-empty. Set this to your site URL in production env.
   let url =
@@ -26,25 +22,9 @@ export const getURL = (path: string = '') => {
   return path ? `${url}/${path}` : url;
 };
 
-export const postData = async ({
-  url,
-  data
-}: {
-  url: string;
-  data?: { price: Price };
-}) => {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json' }),
-    credentials: 'same-origin',
-    body: JSON.stringify(data)
-  });
-
-  return res.json();
-};
 
 export const toDateTime = (secs: number) => {
-  var t = new Date(+0); // Unix epoch start.
+  const t = new Date(+0); // Unix epoch start.
   t.setSeconds(secs);
   return t;
 };

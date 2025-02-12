@@ -34,15 +34,17 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: DO NOT REMOVE auth.getUser()
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
   if (
-    !user &&
+    !session &&
     // !request.nextUrl.pathname.startsWith('/') &&
-    !request.nextUrl.pathname.startsWith('/auth') &&
+    !request.nextUrl.pathname.startsWith('/auth/signin') &&
+    !request.nextUrl.pathname.startsWith('/auth/signup') &&
     !request.nextUrl.pathname.startsWith('/api/webhooks/train') &&
-    !request.nextUrl.pathname.startsWith('/api/webhooks/stripe')
+    !request.nextUrl.pathname.startsWith('/api/webhooks/stripe') &&
+    request.nextUrl.pathname !== '/'
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()

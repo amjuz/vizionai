@@ -57,5 +57,5 @@ export async function signout(): Promise<void> {
 
   await supabase.auth.signOut({});
 
-  redirect("/auth/signin");
+  redirect("/");
 }

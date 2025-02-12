@@ -34,14 +34,14 @@ body {
     --border: 25 30% 80%;
     --input: 25 30% 80%;
     --ring: 25 38% 40%;
-    
+
     /* Additional chart colors - complementary to the light warm theme */
     --chart-1: 25 76% 55%;
     --chart-2: 5 58% 49%;
     --chart-3: 45 37% 44%;
     --chart-4: -5 74% 56%;
     --chart-5: 65 67% 57%;
-    
+
     /* Sidebar specific variables - matching the light theme */
     --sidebar-background: 25 50% 95%;
     --sidebar-foreground: 25 5% 20%;
@@ -51,10 +51,10 @@ body {
     --sidebar-accent-foreground: 25 5% 10%;
     --sidebar-border: 25 30% 80%;
     --sidebar-ring: 25 38% 60%;
-    
+
     /* Border radius */
     --radius: 0.3rem;
-}
+  }
   .dark {
     /* Core colors - maintaining the dark warm theme with base hue 25 */
     --background: 25 50% 10%;
@@ -76,14 +76,14 @@ body {
     --border: 25 30% 33%;
     --input: 25 30% 33%;
     --ring: 25 38% 27%;
-    
+
     /* Additional chart colors - complementary to the dark warm theme */
     --chart-1: 25 76% 45%;
     --chart-2: 5 58% 39%;
     --chart-3: 45 37% 34%;
     --chart-4: -5 74% 46%;
     --chart-5: 65 67% 47%;
-    
+
     /* Sidebar specific variables - matching the dark theme */
     --sidebar-background: 25 50% 15%;
     --sidebar-foreground: 25 5% 80%;
@@ -93,10 +93,10 @@ body {
     --sidebar-accent-foreground: 25 5% 90%;
     --sidebar-border: 25 30% 33%;
     --sidebar-ring: 25 38% 47%;
-    
+
     /* Border radius */
     --radius: 0.3rem;
-}
+  }
 }
 
 @layer base {

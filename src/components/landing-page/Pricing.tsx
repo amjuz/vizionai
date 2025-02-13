@@ -1,8 +1,8 @@
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { cn } from "@/lib/utils";
-import BillingSwitcher from "./BillingSwitcher";
 import { createClient } from "@/lib/supabase/server";
 import { getProducts } from "@/lib/supabase/queries";
+import BillingPlans from "./BillingSwitcher";
 
 // interface IPricing {
 //   products: Table['products']['Row'][]
@@ -33,8 +33,7 @@ export default async function Pricing() {
             engaging your audience, creating customer loyalty and driving sales.
           </p>
         </div>
-        {/* @ts-expect-error  database types mismatch*/}
-        <BillingSwitcher products={products} />
+        <BillingPlans products={products} pageType="home"/>
       </div>
     </section>
   );

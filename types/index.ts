@@ -19,3 +19,5 @@ export type Product = Table['products']['Row']
 export type Price = Table['prices']['Row'] 
 
 export type Subscription = Table['subscriptions']['Row'] 
+
+export type AuthUser = Database['auth']['Tables']['users']['Row']

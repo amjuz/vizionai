@@ -2,6 +2,11 @@ import { Database } from '@/types/database.types';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { cache } from 'react';
 
+export type TGetUserAuth = Awaited<ReturnType<typeof getUser>> 
+export type TGetSubscription = Awaited<ReturnType<typeof getSubscription>> 
+export type TGetProducts = Awaited<ReturnType<typeof getProducts>> 
+export type TGetUserDetails = Awaited<ReturnType<typeof getUserDetails>> 
+
 export const getUser = cache(async (supabase: SupabaseClient<Database>) => {
   const {
     data: { user }

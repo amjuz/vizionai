@@ -42,13 +42,15 @@ export default function SubscriptionButton({
   else {
     // if(user && subscription && subscription.prices?.products?.name?.toLowerCase())
     // if (user && !subscription) {
-    function handleClick(price: TGetProductsNonNull[number]["prices"][number]) {
-      console.log(price);
+    function handleClick(
+      // price: TGetProductsNonNull[number]["prices"][number]
+    ) {
+      // console.log(price);
     }
 
     return (
       <Button
-        onClick={() => handleClick(price)}
+        // onClick={() => handleClick(price)}
         className="mt-8 w-full font-semibold"
       >
         Subscribe

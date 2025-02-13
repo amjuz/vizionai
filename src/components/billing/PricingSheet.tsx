@@ -1,6 +1,4 @@
-import {
-  getProducts,
-} from "@/lib/supabase/queries";
+import { getProducts } from "@/lib/supabase/queries";
 import {
   Sheet,
   SheetContent,
@@ -12,7 +10,7 @@ import {
 import { Button } from "../ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
-import BillingPlans from "../landing-page/BillingSwitcher";
+import BillingPlans from "../landing-page/BillingPlan";
 
 // interface IPricingSheetProps {
 //   subscription?: TGetSubscription;
@@ -28,14 +26,14 @@ export default async function PricingSheet() {
       <SheetTrigger asChild>
         <Button variant={"outline"}>Upgrade</Button>
       </SheetTrigger>
-      <SheetContent className={cn("h-[calc(100vh-20%)]")} side={'bottom'}>
+      <SheetContent className={cn("h-[calc(100vh-20%)]")} side={"bottom"}>
         <SheetHeader>
           <SheetTitle>Choose subscription plan</SheetTitle>
           <SheetDescription>
             Choose a plan that fits your need and budget to continue using
             service
           </SheetDescription>
-          <BillingPlans products={products} pageType="profile"/>
+          <BillingPlans products={products} pageType="profile" />
         </SheetHeader>
       </SheetContent>
     </Sheet>

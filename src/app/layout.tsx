@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
 import ReactQueryProvider from "@/lib/react-query/ReactQueryProvider";
+import BillingContextProvider from "@/provider/BillingContextProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,8 +32,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <ReactQueryProvider>
-          {children}
-          <Toaster richColors expand/>
+          <BillingContextProvider>{children}</BillingContextProvider>
+          <Toaster richColors expand />
         </ReactQueryProvider>
       </body>
     </html>

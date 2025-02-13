@@ -1,42 +1,33 @@
-"use client";
 import { Label } from "@radix-ui/react-label";
-import { Switch } from "../ui/switch";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { TGetProducts } from "@/lib/supabase/queries";
+import {
+  TGetProducts,
+} from "@/lib/supabase/queries";
 import PricingDetails from "./PricingDetails";
 import PricingDetailsDescription from "./PricingDetailsDescription";
-
+import BillingSwitcher from "../billing/BillingSwitcher";
 
 export type BillingPlanCategory = "pro" | "hobby" | "enterprice";
+export type BillingPageType = "profile" | "home";
 
 interface IBillingProps {
   products: TGetProducts;
   mostPopularProduct?: BillingPlanCategory;
-  pageType: "profile" | "home";
+  pageType: BillingPageType;
 }
 
-export default function BillingPlans({
+export default async function BillingPlans({
   products,
   mostPopularProduct = "pro",
   pageType,
 }: IBillingProps) {
-  const [billingInterval, setBillingInterval] = useState("month");
-
   return (
     <div className="">
       <div className="flex items-center justify-center space-x-4 py-8">
         <Label htmlFor="pricing-switch" className="font-semibold text-base">
           Monthly
         </Label>
-        <Switch
-          id="pricing-switch"
-          checked={billingInterval === "year"}
-          onCheckedChange={(checked) =>
-            setBillingInterval(checked ? "year" : "month")
-          }
-        />
-
+        <BillingSwitcher />
         <Label htmlFor="pricing-switch" className="font-semibold text-base">
           Yearly
         </Label>
@@ -57,8 +48,8 @@ export default function BillingPlans({
               >
                 <PricingDetails
                   product={product}
-                  billingInterval={billingInterval}
                   mostPopularProduct={mostPopularProduct}
+                  pageType={pageType}
                 />
                 {pageType === "home" && (
                   <PricingDetailsDescription product={product} />

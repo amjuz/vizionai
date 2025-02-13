@@ -1,22 +1,24 @@
-import Link from "next/link";
-import { buttonVariants } from "../ui/button";
-import { cn } from "@/lib/utils";
+"use client";
 import { TGetProducts } from "@/lib/supabase/queries";
 import { Badge } from "../ui/badge";
-import { BillingPlanCategory } from "./BillingSwitcher";
+import { BillingPageType, BillingPlanCategory } from "./BillingPlan";
+import SubscriptionButton from "../billing/SubscriptionButton";
+import { useBillingInterval } from "@/provider/BillingContextProvider";
 
 export type TGetProductsNonNull = Exclude<TGetProducts, null>;
 
 interface IPricingDetailsProps {
   product: TGetProductsNonNull[number];
-  billingInterval: string;
   mostPopularProduct: BillingPlanCategory;
+  pageType: BillingPageType;
 }
 export default function PricingDetails({
   product,
-  billingInterval,
   mostPopularProduct,
+  pageType,
 }: IPricingDetailsProps) {
+  const { billingInterval } = useBillingInterval();
+
   if (!product) return null;
 
   const price = product.prices.find(
@@ -49,20 +51,12 @@ export default function PricingDetails({
           /{billingInterval}
         </span>
       </p>
-      <Link
-        href={"/auth/signin"}
-        className={cn(
-          "mt-8 w-full font-semibold",
-          buttonVariants({
-            variant:
-              product.name?.toLowerCase() === mostPopularProduct.toLowerCase()
-                ? "default"
-                : "secondary",
-          })
-        )}
-      >
-        Subscribe
-      </Link>
+      <SubscriptionButton
+        mostPopularProduct={mostPopularProduct}
+        pageType={pageType}
+        product={product}
+        price={price}
+      />
     </div>
   );
 }

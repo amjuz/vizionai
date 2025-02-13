@@ -1,12 +1,7 @@
-import {
-  TGetProducts,
-  TGetSubscription,
-  TGetUserAuth,
-} from "@/lib/supabase/queries";
+import { TGetSubscription } from "@/lib/supabase/queries";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
-import { Button } from "../ui/button";
 import PricingSheet from "./PricingSheet";
 
 // interface ProductsWithPrice extends Product {
@@ -25,7 +20,7 @@ interface IBillingPlanSummaryProps {
   subscription: TGetSubscription;
 }
 export default function BillingPlanSummary({
-  subscription
+  subscription,
 }: IBillingPlanSummaryProps) {
   if (!subscription || subscription.status !== "active") {
     return (

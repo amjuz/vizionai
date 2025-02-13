@@ -2,7 +2,7 @@ import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import { getProducts } from "@/lib/supabase/queries";
-import BillingPlans from "./BillingSwitcher";
+import BillingPlans from "./BillingPlan";
 
 // interface IPricing {
 //   products: Table['products']['Row'][]

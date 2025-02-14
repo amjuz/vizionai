@@ -1,26 +1,32 @@
 import { Label } from "@radix-ui/react-label";
 import { cn } from "@/lib/utils";
 import {
+  getProducts,
   TGetProducts,
 } from "@/lib/supabase/queries";
 import PricingDetails from "./PricingDetails";
 import PricingDetailsDescription from "./PricingDetailsDescription";
 import BillingSwitcher from "../billing/BillingSwitcher";
+import { createClient } from "@/lib/supabase/server";
 
 export type BillingPlanCategory = "pro" | "hobby" | "enterprice";
 export type BillingPageType = "profile" | "home";
 
 interface IBillingProps {
-  products: TGetProducts;
+  // products: TGetProducts;
   mostPopularProduct?: BillingPlanCategory;
   pageType: BillingPageType;
 }
 
 export default async function BillingPlans({
-  products,
+  // products,
   mostPopularProduct = "pro",
   pageType,
 }: IBillingProps) {
+
+  const supabase = await createClient();
+  const products = await getProducts(supabase);
+  
   return (
     <div className="">
       <div className="flex items-center justify-center space-x-4 py-8">

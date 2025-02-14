@@ -1,16 +1,8 @@
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/lib/supabase/server";
-import { getProducts } from "@/lib/supabase/queries";
 import BillingPlans from "./BillingPlan";
 
-// interface IPricing {
-//   products: Table['products']['Row'][]
-// }
-export default async function Pricing() {
-// {products}:IPricing
-  const supabase = await createClient();
-  const products = await getProducts(supabase); // gets all the products and their prices
+export default async function PricingHomePage() {
 
   return (
     <section className="w-full flex flex-col items-center justify-center ">
@@ -33,7 +25,7 @@ export default async function Pricing() {
             engaging your audience, creating customer loyalty and driving sales.
           </p>
         </div>
-        <BillingPlans products={products} pageType="home"/>
+        <BillingPlans pageType="home"/>
       </div>
     </section>
   );

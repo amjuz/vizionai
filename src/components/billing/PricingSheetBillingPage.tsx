@@ -1,4 +1,3 @@
-import { getProducts } from "@/lib/supabase/queries";
 import {
   Sheet,
   SheetContent,
@@ -8,19 +7,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
-import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 import BillingPlans from "../landing-page/BillingPlan";
 
-// interface IPricingSheetProps {
-//   subscription?: TGetSubscription;
-//   user?: TGetUserAuth;
-//   products?: TGetProducts;
-// }
-
-export default async function PricingSheet() {
-  const supabase = await createClient();
-  const products = await getProducts(supabase);
+export default async function PricingSheetBillingPage() {
+  
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -33,7 +24,7 @@ export default async function PricingSheet() {
             Choose a plan that fits your need and budget to continue using
             service
           </SheetDescription>
-          <BillingPlans products={products} pageType="profile" />
+          <BillingPlans pageType="profile" />
         </SheetHeader>
       </SheetContent>
     </Sheet>

@@ -2,7 +2,7 @@ import { TGetSubscription } from "@/lib/supabase/queries";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
-import PricingSheet from "./PricingSheet";
+import PricingSheet from "./PricingSheetBillingPage";
 
 // interface ProductsWithPrice extends Product {
 //     products: Price[]

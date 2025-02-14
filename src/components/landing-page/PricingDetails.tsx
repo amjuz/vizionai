@@ -2,8 +2,10 @@
 import { TGetProducts } from "@/lib/supabase/queries";
 import { Badge } from "../ui/badge";
 import { BillingPageType, BillingPlanCategory } from "./BillingPlan";
-import SubscriptionButton from "../billing/SubscriptionButton";
+// import SubscriptionButton from "../billing/SubscriptionButtonHome";
 import { useBillingInterval } from "@/provider/BillingContextProvider";
+import SubscriptionButtonHome from "../billing/SubscriptionButtonHome";
+import SubscribeButtonProfile from "../billing/SubscribeButtonProfile";
 
 export type TGetProductsNonNull = Exclude<TGetProducts, null>;
 
@@ -51,12 +53,15 @@ export default function PricingDetails({
           /{billingInterval}
         </span>
       </p>
-      <SubscriptionButton
-        mostPopularProduct={mostPopularProduct}
-        pageType={pageType}
-        product={product}
-        price={price}
-      />
+      {pageType === "home" && (
+        <SubscriptionButtonHome
+          mostPopularProduct={mostPopularProduct}
+          // pageType={pageType}
+          product={product}
+          // price={price}
+        />
+      )}
+      {pageType === "profile" && <SubscribeButtonProfile />}
     </div>
   );
 }

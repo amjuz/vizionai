@@ -1,6 +1,6 @@
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { cn } from "@/lib/utils";
-import BillingPlans from "./BillingPlan";
+import HomeBillingPlans from "../billing/home/HomeBillingPlan";
 
 export default async function PricingHomePage() {
 
@@ -25,7 +25,7 @@ export default async function PricingHomePage() {
             engaging your audience, creating customer loyalty and driving sales.
           </p>
         </div>
-        <BillingPlans pageType="home"/>
+        <HomeBillingPlans/>
       </div>
     </section>
   );

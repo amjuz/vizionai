@@ -1,4 +1,4 @@
-import Pricing from "@/components/landing-page/Pricing";
+import PricingHomePage from "@/components/landing-page/PricingHomePage";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -10,7 +10,7 @@ export default async function Home() {
     
   return (
     <main className="flex flex-col min-h-screen items-center justify-center">
-      <Pricing />
+      <PricingHomePage />
     </main>
   );
 }

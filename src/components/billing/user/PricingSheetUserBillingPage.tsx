@@ -6,11 +6,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { cn } from "@/lib/utils";
-import BillingPlans from "../landing-page/BillingPlan";
+import UserBillingPlans from "./UserBillingPlans";
 
-export default async function PricingSheetBillingPage() {
+export default async function   PricingSheetUserBillingPage() {
   
   return (
     <Sheet>
@@ -24,7 +24,7 @@ export default async function PricingSheetBillingPage() {
             Choose a plan that fits your need and budget to continue using
             service
           </SheetDescription>
-          <BillingPlans pageType="profile" />
+          <UserBillingPlans />
         </SheetHeader>
       </SheetContent>
     </Sheet>

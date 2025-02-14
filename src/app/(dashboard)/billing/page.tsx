@@ -1,10 +1,6 @@
-import BillingPlanSummary from "@/components/billing/plan-summary";
-import { getSubscription } from "@/lib/supabase/queries";
-import { createClient } from "@/lib/supabase/server";
+import UserBillingPlanSummary from "@/components/billing/user/UserBillingPlanSummary";
 
 const page = async () => {
-  const supabase = await createClient();
-  const subscription = await getSubscription(supabase);
   return (
     <section className="container mx-auto space-y-8">
       <div className="">
@@ -14,7 +10,7 @@ const page = async () => {
         </p>
       </div>
       <div className="grid gap-10">
-        <BillingPlanSummary subscription={subscription} />
+        <UserBillingPlanSummary />
       </div>
     </section>
   );

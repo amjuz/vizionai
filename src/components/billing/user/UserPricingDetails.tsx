@@ -1,21 +1,23 @@
 "use client";
 
-import { TGetProducts } from "@/lib/supabase/queries";
-import { Badge } from "../ui/badge";
-import { BillingPlanCategory } from "../billing/home/HomeBillingPlan";
+import { TGetProducts, TGetSubscription } from "@/lib/supabase/queries";
 import { useBillingInterval } from "@/provider/BillingContextProvider";
-import SubscriptionButtonHome from "../billing/home/SubscriptionButtonHome";
+import SubscribeButtonUser from "./SubscribeButtonUser";
+import { BillingPlanCategory } from "./UserBillingPlans";
+import { Badge } from "@/components/ui/badge";
 
 export type TGetProductsNonNull = Exclude<TGetProducts, null>;
 
-interface IPricingDetailsProps {
+interface IUserPricingDetailsProps {
+  subscription: TGetSubscription;
   product: TGetProductsNonNull[number];
   mostPopularProduct: BillingPlanCategory;
 }
-export default function PricingDetails({
+export default function UserPricingDetails({
+  subscription,
   product,
   mostPopularProduct,
-}: IPricingDetailsProps) {
+}: IUserPricingDetailsProps) {
   const { billingInterval } = useBillingInterval();
 
   if (!product) return null;
@@ -29,7 +31,7 @@ export default function PricingDetails({
     style: "currency",
     currency: price.currency!,
     minimumFractionDigits: 0,
-  }).format((price.unit_amount || 0) / 100);
+  }).format((price.unit_amount ?? 0) / 100);
 
   return (
     <div className="p-6 ">
@@ -50,9 +52,10 @@ export default function PricingDetails({
           /{billingInterval}
         </span>
       </p>
-      <SubscriptionButtonHome
+      <SubscribeButtonUser
         mostPopularProduct={mostPopularProduct}
         product={product}
+        subscription={subscription}
       />
     </div>
   );

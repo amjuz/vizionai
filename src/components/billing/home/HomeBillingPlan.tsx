@@ -1,32 +1,23 @@
 import { Label } from "@radix-ui/react-label";
 import { cn } from "@/lib/utils";
-import {
-  getProducts,
-  TGetProducts,
-} from "@/lib/supabase/queries";
-import PricingDetails from "./PricingDetails";
-import PricingDetailsDescription from "./PricingDetailsDescription";
-import BillingSwitcher from "../billing/BillingSwitcher";
+import { getProducts } from "@/lib/supabase/queries";
+import PricingDetails from "../../landing-page/PricingDetails";
+import PricingDetailsDescription from "../../landing-page/PricingDetailsDescription";
+import BillingSwitcher from "../BillingSwitcher";
 import { createClient } from "@/lib/supabase/server";
 
 export type BillingPlanCategory = "pro" | "hobby" | "enterprice";
-export type BillingPageType = "profile" | "home";
 
 interface IBillingProps {
   // products: TGetProducts;
   mostPopularProduct?: BillingPlanCategory;
-  pageType: BillingPageType;
 }
 
-export default async function BillingPlans({
-  // products,
+export default async function HomeBillingPlans({
   mostPopularProduct = "pro",
-  pageType,
 }: IBillingProps) {
-
   const supabase = await createClient();
   const products = await getProducts(supabase);
-  
   return (
     <div className="">
       <div className="flex items-center justify-center space-x-4 py-8">
@@ -55,11 +46,9 @@ export default async function BillingPlans({
                 <PricingDetails
                   product={product}
                   mostPopularProduct={mostPopularProduct}
-                  pageType={pageType}
                 />
-                {pageType === "home" && (
-                  <PricingDetailsDescription product={product} />
-                )}
+
+                <PricingDetailsDescription product={product} />
               </div>
             );
           })}

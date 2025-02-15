@@ -1,11 +1,9 @@
-import { Database, Json } from "@/types/database.types";
+import { Database } from "@/types/database.types";
 import { toDateTime } from "@/lib/helper/stripe/helper";
 import { stripe } from "@/lib/stripe/config";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
 import { Price, Product, Subscription, Table } from "@/types/index";
-import { Metadata } from "@stripe/stripe-js";
-import { error } from "console";
 
 export const supabaseAdminClient = createClient<Database>(
   process.env.SUPABASE_URL!,
@@ -303,15 +301,13 @@ export const updateUserCredits = async (
   metadata: {
     image_generation_count: number;
     model_training_count: number;
-    max_image_generation_count: number;
-    max_model_training_count: number;
   }
 ) => {
   const creditsData: Table["credits"]["Update"] = {
-    image_generation_count: metadata?.image_generation_count ?? 0,
-    model_training_count: metadata?.model_training_count ?? 0,
-    max_image_generation_count: metadata?.max_image_generation_count ?? 0,
-    max_model_training_count: metadata?.max_model_training_count ?? 0,
+    image_generation_count:  metadata?.image_generation_count ?? 0,
+    model_training_count:  metadata?.model_training_count ?? 0,
+    max_image_generation_count: metadata?.image_generation_count ?? 0,
+    max_model_training_count: metadata?.model_training_count ?? 0,
     user_id: userId,
     // created_at: "sd",
     // id: 5,

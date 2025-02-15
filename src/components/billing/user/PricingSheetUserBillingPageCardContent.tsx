@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 
 export default function PricingSheetUserBillingPageCardContent() {
   return (
-    <div className="px-5 py-4">
+    <div className="px-5 py-4 pb-8">
       <h3 className="pb-4 text-base font-semibold flex flex-wrap items-center gap-x-2">
         <span>Plan Summary</span>
         <Badge variant={"secondary"} className="bg-primary/10">

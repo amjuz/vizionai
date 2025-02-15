@@ -56,6 +56,7 @@ export default function UserPricingDetails({
         mostPopularProduct={mostPopularProduct}
         product={product}
         subscription={subscription}
+        price={price}
       />
     </div>
   );

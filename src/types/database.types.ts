@@ -7,307 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  public: {
-    Tables: {
-      customers: {
-        Row: {
-          id: string
-          stripe_customer_id: string | null
-        }
-        Insert: {
-          id: string
-          stripe_customer_id?: string | null
-        }
-        Update: {
-          id?: string
-          stripe_customer_id?: string | null
-        }
-        Relationships: []
-      }
-      generated_images: {
-        Row: {
-          aspect_ratio: string | null
-          created_at: string
-          guidance: number | null
-          height: number | null
-          id: number
-          image_name: string | null
-          model: string | null
-          num_inference_steps: number | null
-          output_format: string | null
-          prompt: string | null
-          user_id: string | null
-          width: number | null
-        }
-        Insert: {
-          aspect_ratio?: string | null
-          created_at?: string
-          guidance?: number | null
-          height?: number | null
-          id?: never
-          image_name?: string | null
-          model?: string | null
-          num_inference_steps?: number | null
-          output_format?: string | null
-          prompt?: string | null
-          user_id?: string | null
-          width?: number | null
-        }
-        Update: {
-          aspect_ratio?: string | null
-          created_at?: string
-          guidance?: number | null
-          height?: number | null
-          id?: never
-          image_name?: string | null
-          model?: string | null
-          num_inference_steps?: number | null
-          output_format?: string | null
-          prompt?: string | null
-          user_id?: string | null
-          width?: number | null
-        }
-        Relationships: []
-      }
-      models: {
-        Row: {
-          created_at: string
-          gender: Database["public"]["Enums"]["gender"] | null
-          id: number
-          model_id: string | null
-          model_name: string | null
-          training_id: string | null
-          training_status: Database["public"]["Enums"]["training_status"] | null
-          training_steps: number | null
-          training_time: string | null
-          trigger_word: string | null
-          user_id: string | null
-          version: string | null
-        }
-        Insert: {
-          created_at?: string
-          gender?: Database["public"]["Enums"]["gender"] | null
-          id?: never
-          model_id?: string | null
-          model_name?: string | null
-          training_id?: string | null
-          training_status?:
-            | Database["public"]["Enums"]["training_status"]
-            | null
-          training_steps?: number | null
-          training_time?: string | null
-          trigger_word?: string | null
-          user_id?: string | null
-          version?: string | null
-        }
-        Update: {
-          created_at?: string
-          gender?: Database["public"]["Enums"]["gender"] | null
-          id?: never
-          model_id?: string | null
-          model_name?: string | null
-          training_id?: string | null
-          training_status?:
-            | Database["public"]["Enums"]["training_status"]
-            | null
-          training_steps?: number | null
-          training_time?: string | null
-          trigger_word?: string | null
-          user_id?: string | null
-          version?: string | null
-        }
-        Relationships: []
-      }
-      prices: {
-        Row: {
-          active: boolean | null
-          currency: string | null
-          description: string | null
-          id: string
-          interval: Database["public"]["Enums"]["pricing_plan_interval"] | null
-          interval_count: number | null
-          metadata: Json | null
-          product_id: string | null
-          trial_period_days: number | null
-          type: Database["public"]["Enums"]["pricing_type"] | null
-          unit_amount: number | null
-        }
-        Insert: {
-          active?: boolean | null
-          currency?: string | null
-          description?: string | null
-          id: string
-          interval?: Database["public"]["Enums"]["pricing_plan_interval"] | null
-          interval_count?: number | null
-          metadata?: Json | null
-          product_id?: string | null
-          trial_period_days?: number | null
-          type?: Database["public"]["Enums"]["pricing_type"] | null
-          unit_amount?: number | null
-        }
-        Update: {
-          active?: boolean | null
-          currency?: string | null
-          description?: string | null
-          id?: string
-          interval?: Database["public"]["Enums"]["pricing_plan_interval"] | null
-          interval_count?: number | null
-          metadata?: Json | null
-          product_id?: string | null
-          trial_period_days?: number | null
-          type?: Database["public"]["Enums"]["pricing_type"] | null
-          unit_amount?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "prices_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      products: {
-        Row: {
-          active: boolean | null
-          description: string | null
-          id: string
-          image: string | null
-          metadata: Json | null
-          name: string | null
-        }
-        Insert: {
-          active?: boolean | null
-          description?: string | null
-          id: string
-          image?: string | null
-          metadata?: Json | null
-          name?: string | null
-        }
-        Update: {
-          active?: boolean | null
-          description?: string | null
-          id?: string
-          image?: string | null
-          metadata?: Json | null
-          name?: string | null
-        }
-        Relationships: []
-      }
-      subscriptions: {
-        Row: {
-          cancel_at: string | null
-          cancel_at_period_end: boolean | null
-          canceled_at: string | null
-          created: string
-          current_period_end: string
-          current_period_start: string
-          ended_at: string | null
-          id: string
-          metadata: Json | null
-          price_id: string | null
-          quantity: number | null
-          status: Database["public"]["Enums"]["subscription_status"] | null
-          trial_end: string | null
-          trial_start: string | null
-          user_id: string
-        }
-        Insert: {
-          cancel_at?: string | null
-          cancel_at_period_end?: boolean | null
-          canceled_at?: string | null
-          created?: string
-          current_period_end?: string
-          current_period_start?: string
-          ended_at?: string | null
-          id: string
-          metadata?: Json | null
-          price_id?: string | null
-          quantity?: number | null
-          status?: Database["public"]["Enums"]["subscription_status"] | null
-          trial_end?: string | null
-          trial_start?: string | null
-          user_id: string
-        }
-        Update: {
-          cancel_at?: string | null
-          cancel_at_period_end?: boolean | null
-          canceled_at?: string | null
-          created?: string
-          current_period_end?: string
-          current_period_start?: string
-          ended_at?: string | null
-          id?: string
-          metadata?: Json | null
-          price_id?: string | null
-          quantity?: number | null
-          status?: Database["public"]["Enums"]["subscription_status"] | null
-          trial_end?: string | null
-          trial_start?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subscriptions_price_id_fkey"
-            columns: ["price_id"]
-            isOneToOne: false
-            referencedRelation: "prices"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      users: {
-        Row: {
-          billing_address: Json | null
-          full_name: string | null
-          id: string
-          payment_method: Json | null
-        }
-        Insert: {
-          billing_address?: Json | null
-          full_name?: string | null
-          id: string
-          payment_method?: Json | null
-        }
-        Update: {
-          billing_address?: Json | null
-          full_name?: string | null
-          id?: string
-          payment_method?: Json | null
-        }
-        Relationships: []
-      }
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      [_ in never]: never
-    }
-    Enums: {
-      gender: "male" | "female"
-      pricing_plan_interval: "day" | "week" | "month" | "year"
-      pricing_type: "one_time" | "recurring"
-      subscription_status:
-        | "trialing"
-        | "active"
-        | "canceled"
-        | "incomplete"
-        | "incomplete_expired"
-        | "past_due"
-        | "unpaid"
-      training_status:
-        | "starting"
-        | "processing"
-        | "succeeded"
-        | "failed"
-        | "canceled"
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   auth: {
     Tables: {
       audit_log_entries: {
@@ -1012,316 +711,332 @@ export type Database = {
       [_ in never]: never
     }
   }
-  storage: {
+  public: {
     Tables: {
-      buckets: {
+      credits: {
         Row: {
-          allowed_mime_types: string[] | null
-          avif_autodetection: boolean | null
-          created_at: string | null
-          file_size_limit: number | null
-          id: string
-          name: string
-          owner: string | null
-          owner_id: string | null
-          public: boolean | null
-          updated_at: string | null
+          created_at: string
+          id: number
+          image_generation_count: number | null
+          max_image_generation_count: number | null
+          max_model_training_count: number | null
+          model_training_count: number | null
+          user_id: string | null
         }
         Insert: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
-          id: string
-          name: string
-          owner?: string | null
-          owner_id?: string | null
-          public?: boolean | null
-          updated_at?: string | null
+          created_at?: string
+          id?: never
+          image_generation_count?: number | null
+          max_image_generation_count?: number | null
+          max_model_training_count?: number | null
+          model_training_count?: number | null
+          user_id?: string | null
         }
         Update: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
+          created_at?: string
+          id?: never
+          image_generation_count?: number | null
+          max_image_generation_count?: number | null
+          max_model_training_count?: number | null
+          model_training_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      customers: {
+        Row: {
+          id: string
+          stripe_customer_id: string | null
+        }
+        Insert: {
+          id: string
+          stripe_customer_id?: string | null
+        }
+        Update: {
           id?: string
-          name?: string
-          owner?: string | null
-          owner_id?: string | null
-          public?: boolean | null
-          updated_at?: string | null
+          stripe_customer_id?: string | null
         }
         Relationships: []
       }
-      migrations: {
+      generated_images: {
         Row: {
-          executed_at: string | null
-          hash: string
+          aspect_ratio: string | null
+          created_at: string
+          guidance: number | null
+          height: number | null
           id: number
-          name: string
+          image_name: string | null
+          model: string | null
+          num_inference_steps: number | null
+          output_format: string | null
+          prompt: string | null
+          user_id: string | null
+          width: number | null
         }
         Insert: {
-          executed_at?: string | null
-          hash: string
-          id: number
-          name: string
+          aspect_ratio?: string | null
+          created_at?: string
+          guidance?: number | null
+          height?: number | null
+          id?: never
+          image_name?: string | null
+          model?: string | null
+          num_inference_steps?: number | null
+          output_format?: string | null
+          prompt?: string | null
+          user_id?: string | null
+          width?: number | null
         }
         Update: {
-          executed_at?: string | null
-          hash?: string
-          id?: number
-          name?: string
+          aspect_ratio?: string | null
+          created_at?: string
+          guidance?: number | null
+          height?: number | null
+          id?: never
+          image_name?: string | null
+          model?: string | null
+          num_inference_steps?: number | null
+          output_format?: string | null
+          prompt?: string | null
+          user_id?: string | null
+          width?: number | null
         }
         Relationships: []
       }
-      objects: {
+      models: {
         Row: {
-          bucket_id: string | null
-          created_at: string | null
-          id: string
-          last_accessed_at: string | null
-          metadata: Json | null
-          name: string | null
-          owner: string | null
-          owner_id: string | null
-          path_tokens: string[] | null
-          updated_at: string | null
-          user_metadata: Json | null
+          created_at: string
+          gender: Database["public"]["Enums"]["gender"] | null
+          id: number
+          model_id: string | null
+          model_name: string | null
+          training_id: string | null
+          training_status: Database["public"]["Enums"]["training_status"] | null
+          training_steps: number | null
+          training_time: string | null
+          trigger_word: string | null
+          user_id: string | null
           version: string | null
         }
         Insert: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          user_metadata?: Json | null
+          created_at?: string
+          gender?: Database["public"]["Enums"]["gender"] | null
+          id?: never
+          model_id?: string | null
+          model_name?: string | null
+          training_id?: string | null
+          training_status?:
+            | Database["public"]["Enums"]["training_status"]
+            | null
+          training_steps?: number | null
+          training_time?: string | null
+          trigger_word?: string | null
+          user_id?: string | null
           version?: string | null
         }
         Update: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          user_metadata?: Json | null
+          created_at?: string
+          gender?: Database["public"]["Enums"]["gender"] | null
+          id?: never
+          model_id?: string | null
+          model_name?: string | null
+          training_id?: string | null
+          training_status?:
+            | Database["public"]["Enums"]["training_status"]
+            | null
+          training_steps?: number | null
+          training_time?: string | null
+          trigger_word?: string | null
+          user_id?: string | null
           version?: string | null
+        }
+        Relationships: []
+      }
+      prices: {
+        Row: {
+          active: boolean | null
+          currency: string | null
+          description: string | null
+          id: string
+          interval: Database["public"]["Enums"]["pricing_plan_interval"] | null
+          interval_count: number | null
+          metadata: Json | null
+          product_id: string | null
+          trial_period_days: number | null
+          type: Database["public"]["Enums"]["pricing_type"] | null
+          unit_amount: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          currency?: string | null
+          description?: string | null
+          id: string
+          interval?: Database["public"]["Enums"]["pricing_plan_interval"] | null
+          interval_count?: number | null
+          metadata?: Json | null
+          product_id?: string | null
+          trial_period_days?: number | null
+          type?: Database["public"]["Enums"]["pricing_type"] | null
+          unit_amount?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          interval?: Database["public"]["Enums"]["pricing_plan_interval"] | null
+          interval_count?: number | null
+          metadata?: Json | null
+          product_id?: string | null
+          trial_period_days?: number | null
+          type?: Database["public"]["Enums"]["pricing_type"] | null
+          unit_amount?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "objects_bucketId_fkey"
-            columns: ["bucket_id"]
+            foreignKeyName: "prices_product_id_fkey"
+            columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "buckets"
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
       }
-      s3_multipart_uploads: {
+      products: {
         Row: {
-          bucket_id: string
-          created_at: string
+          active: boolean | null
+          description: string | null
           id: string
-          in_progress_size: number
-          key: string
-          owner_id: string | null
-          upload_signature: string
-          user_metadata: Json | null
-          version: string
+          image: string | null
+          metadata: Json | null
+          name: string | null
         }
         Insert: {
-          bucket_id: string
-          created_at?: string
+          active?: boolean | null
+          description?: string | null
           id: string
-          in_progress_size?: number
-          key: string
-          owner_id?: string | null
-          upload_signature: string
-          user_metadata?: Json | null
-          version: string
+          image?: string | null
+          metadata?: Json | null
+          name?: string | null
         }
         Update: {
-          bucket_id?: string
-          created_at?: string
+          active?: boolean | null
+          description?: string | null
           id?: string
-          in_progress_size?: number
-          key?: string
-          owner_id?: string | null
-          upload_signature?: string
-          user_metadata?: Json | null
-          version?: string
+          image?: string | null
+          metadata?: Json | null
+          name?: string | null
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          cancel_at: string | null
+          cancel_at_period_end: boolean | null
+          canceled_at: string | null
+          created: string
+          current_period_end: string
+          current_period_start: string
+          ended_at: string | null
+          id: string
+          metadata: Json | null
+          price_id: string | null
+          quantity: number | null
+          status: Database["public"]["Enums"]["subscription_status"] | null
+          trial_end: string | null
+          trial_start: string | null
+          user_id: string
+        }
+        Insert: {
+          cancel_at?: string | null
+          cancel_at_period_end?: boolean | null
+          canceled_at?: string | null
+          created?: string
+          current_period_end?: string
+          current_period_start?: string
+          ended_at?: string | null
+          id: string
+          metadata?: Json | null
+          price_id?: string | null
+          quantity?: number | null
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          trial_end?: string | null
+          trial_start?: string | null
+          user_id: string
+        }
+        Update: {
+          cancel_at?: string | null
+          cancel_at_period_end?: boolean | null
+          canceled_at?: string | null
+          created?: string
+          current_period_end?: string
+          current_period_start?: string
+          ended_at?: string | null
+          id?: string
+          metadata?: Json | null
+          price_id?: string | null
+          quantity?: number | null
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          trial_end?: string | null
+          trial_start?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "s3_multipart_uploads_bucket_id_fkey"
-            columns: ["bucket_id"]
+            foreignKeyName: "subscriptions_price_id_fkey"
+            columns: ["price_id"]
             isOneToOne: false
-            referencedRelation: "buckets"
+            referencedRelation: "prices"
             referencedColumns: ["id"]
           },
         ]
       }
-      s3_multipart_uploads_parts: {
+      users: {
         Row: {
-          bucket_id: string
-          created_at: string
-          etag: string
+          billing_address: Json | null
+          full_name: string | null
           id: string
-          key: string
-          owner_id: string | null
-          part_number: number
-          size: number
-          upload_id: string
-          version: string
+          payment_method: Json | null
         }
         Insert: {
-          bucket_id: string
-          created_at?: string
-          etag: string
-          id?: string
-          key: string
-          owner_id?: string | null
-          part_number: number
-          size?: number
-          upload_id: string
-          version: string
+          billing_address?: Json | null
+          full_name?: string | null
+          id: string
+          payment_method?: Json | null
         }
         Update: {
-          bucket_id?: string
-          created_at?: string
-          etag?: string
+          billing_address?: Json | null
+          full_name?: string | null
           id?: string
-          key?: string
-          owner_id?: string | null
-          part_number?: number
-          size?: number
-          upload_id?: string
-          version?: string
+          payment_method?: Json | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "s3_multipart_uploads_parts_bucket_id_fkey"
-            columns: ["bucket_id"]
-            isOneToOne: false
-            referencedRelation: "buckets"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "s3_multipart_uploads_parts_upload_id_fkey"
-            columns: ["upload_id"]
-            isOneToOne: false
-            referencedRelation: "s3_multipart_uploads"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      can_insert_object: {
-        Args: {
-          bucketid: string
-          name: string
-          owner: string
-          metadata: Json
-        }
-        Returns: undefined
-      }
-      extension: {
-        Args: {
-          name: string
-        }
-        Returns: string
-      }
-      filename: {
-        Args: {
-          name: string
-        }
-        Returns: string
-      }
-      foldername: {
-        Args: {
-          name: string
-        }
-        Returns: string[]
-      }
-      get_size_by_bucket: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          size: number
-          bucket_id: string
-        }[]
-      }
-      list_multipart_uploads_with_delimiter: {
-        Args: {
-          bucket_id: string
-          prefix_param: string
-          delimiter_param: string
-          max_keys?: number
-          next_key_token?: string
-          next_upload_token?: string
-        }
-        Returns: {
-          key: string
-          id: string
-          created_at: string
-        }[]
-      }
-      list_objects_with_delimiter: {
-        Args: {
-          bucket_id: string
-          prefix_param: string
-          delimiter_param: string
-          max_keys?: number
-          start_after?: string
-          next_token?: string
-        }
-        Returns: {
-          name: string
-          id: string
-          metadata: Json
-          updated_at: string
-        }[]
-      }
-      operation: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      search: {
-        Args: {
-          prefix: string
-          bucketname: string
-          limits?: number
-          levels?: number
-          offsets?: number
-          search?: string
-          sortcolumn?: string
-          sortorder?: string
-        }
-        Returns: {
-          name: string
-          id: string
-          updated_at: string
-          created_at: string
-          last_accessed_at: string
-          metadata: Json
-        }[]
-      }
+      [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      gender: "male" | "female"
+      pricing_plan_interval: "day" | "week" | "month" | "year"
+      pricing_type: "one_time" | "recurring"
+      subscription_status:
+        | "trialing"
+        | "active"
+        | "canceled"
+        | "incomplete"
+        | "incomplete_expired"
+        | "past_due"
+        | "unpaid"
+      training_status:
+        | "starting"
+        | "processing"
+        | "succeeded"
+        | "failed"
+        | "canceled"
     }
     CompositeTypes: {
       [_ in never]: never

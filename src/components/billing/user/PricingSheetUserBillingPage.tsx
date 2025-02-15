@@ -10,7 +10,7 @@ import { Button } from "../../ui/button";
 import { cn } from "@/lib/utils";
 import UserBillingPlans from "./UserBillingPlans";
 
-export default async function   PricingSheetUserBillingPage() {
+export default async function PricingSheetUserBillingPage() {
   
   return (
     <Sheet>

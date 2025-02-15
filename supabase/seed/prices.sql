@@ -1,0 +1,93 @@
+INSERT INTO
+    "public"."prices" (
+        "id",
+        "product_id",
+        "active",
+        "description",
+        "unit_amount",
+        "currency",
+        "type",
+        "interval",
+        "interval_count",
+        "trial_period_days",
+        "metadata"
+    )
+VALUES
+    (
+        'price_1QrG2M4Fl9vqGlimfStpINrI',
+        'prod_RklZcV8MVCZ0nT',
+        'true',
+        null,
+        '1500',
+        'usd',
+        'recurring',
+        'month',
+        '1',
+        '2',
+        '{"model_training_count": "1", "image_generation_count": "100"}'
+    ),
+    (
+        'price_1QrG3Y4Fl9vqGlimg1afY3or',
+        'prod_RklZcV8MVCZ0nT',
+        'true',
+        null,
+        '15000',
+        'usd',
+        'recurring',
+        'year',
+        '1',
+        '2',
+        '{"model_training_count": "12", "image_generation_count": "1200"}'
+    ),
+    (
+        'price_1QrGSA4Fl9vqGlim35A87bWj',
+        'prod_Rkm0r2W4OcWmUr',
+        'true',
+        null,
+        '3000',
+        'usd',
+        'recurring',
+        'month',
+        '1',
+        '2',
+        '{"model_training_count": "2", "image_generation_count": "300"}'
+    ),
+    (
+        'price_1QrGSA4Fl9vqGlimPthCTp5T',
+        'prod_Rkm0r2W4OcWmUr',
+        'true',
+        null,
+        '30000',
+        'usd',
+        'recurring',
+        'year',
+        '1',
+        '2',
+        '{"model_training_count": "24", "image_generation_count": "3600"}'
+    ),
+    (
+        'price_1QrGYJ4Fl9vqGlime8kBPzlV',
+        'prod_Rkm61sFqyS4esq',
+        'true',
+        null,
+        '6000',
+        'usd',
+        'recurring',
+        'month',
+        '1',
+        '2',
+        '{"model_training_count": "5", "image_generation_count": "1000"}'
+    ),
+    (
+        'price_1QrGYJ4Fl9vqGlimgDBU8aof',
+        'prod_Rkm61sFqyS4esq',
+        'true',
+        null,
+        '60000',
+        'usd',
+        'recurring',
+        'year',
+        '1',
+        '2',
+        '{"model_training_count": "60", "image_generation_count": "12000"}'
+    );

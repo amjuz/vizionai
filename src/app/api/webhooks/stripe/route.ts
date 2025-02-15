@@ -4,6 +4,7 @@ import {
   deletePriceRecord,
   deleteProductRecord,
   manageSubscriptionStatusChange,
+  updateUserCredits,
   upsertPriceRecord,
   upsertProductRecord,
 } from "@/lib/supabase/admin";
@@ -66,12 +67,23 @@ export async function POST(req: Request) {
           break;
         case "checkout.session.completed":
           const checkoutSession = event.data.object as Stripe.Checkout.Session;
+          
           if (checkoutSession.mode === "subscription") {
             const subscriptionId = checkoutSession.subscription;
+
             await manageSubscriptionStatusChange(
-              checkoutSession.customer as string,
               subscriptionId as string,
+              checkoutSession.customer as string,
               true
+            );
+          }
+          if (
+            checkoutSession.status === "complete" &&
+            checkoutSession.payment_status === "paid"
+          ) {
+            await updateUserCredits(
+              checkoutSession.client_reference_id as string,
+              checkoutSession.metadata as any
             );
           }
           break;

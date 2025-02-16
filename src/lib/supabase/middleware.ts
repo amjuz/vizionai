@@ -37,14 +37,20 @@ export async function updateSession(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
+
+  const publicPaths = [
+    '/auth/signin',
+    '/auth/signup',
+    '/api/webhooks/train',
+    '/api/webhooks/stripe',
+  ];
+  
+  const isPublicPath = publicPaths.some(path => 
+    request.nextUrl.pathname.startsWith(path)
+  );
+  
   if (
-    !session &&
-    // !request.nextUrl.pathname.startsWith('/') &&
-    !request.nextUrl.pathname.startsWith('/auth/signin') &&
-    !request.nextUrl.pathname.startsWith('/auth/signup') &&
-    !request.nextUrl.pathname.startsWith('/api/webhooks/train') &&
-    !request.nextUrl.pathname.startsWith('/api/webhooks/stripe') &&
-    request.nextUrl.pathname !== '/'
+    !session && !isPublicPath 
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()

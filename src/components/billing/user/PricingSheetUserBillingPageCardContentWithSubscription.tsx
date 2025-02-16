@@ -28,7 +28,7 @@ export default function PricingSheetUserBillingPageCardContentWithSubscription({
     max_model_training_count,
   } = credits;
   return (
-    <div className="px-5 py-4 pb-1">
+    <div className="px-5 py-4 pb-1 ">
       <h3 className="pb-4 text-base font-semibold flex flex-wrap items-center gap-x-2">
         <span>Plan Summary</span>
         <Badge variant={"secondary"} className="bg-primary/10">

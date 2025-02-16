@@ -24,7 +24,8 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
     try {
       const { data, error, success } = await generateImageAction(values);
       // console.log({ data, error, success });
-
+      // console.log(error);
+      
       if (!success) {
         set({ error, loading: false });
         toast.error(`${error}`, { id: toastId });

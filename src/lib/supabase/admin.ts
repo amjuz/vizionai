@@ -239,7 +239,8 @@ const manageSubscriptionStatusChange = async (
     expand: ["default_payment_method"],
   });
   // Upsert the latest status of the subscription object.
-
+  // console.log("status",subscription.status);
+  
   const subscriptionData: Subscription = {
     id: subscription.id,
     user_id: uuid,

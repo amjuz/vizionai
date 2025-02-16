@@ -4,7 +4,7 @@ import { BillingPlanCategory } from "./UserBillingPlans";
 import { TGetProductsNonNull } from "./UserPricingDetails";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { checkoutWithStripe } from "@/lib/stripe/server";
+import { checkoutWithStripe, createStripePortal } from "@/lib/stripe/server";
 import { getErrorRedirect } from "@/lib/helper/stripe/helper";
 import { getStripe } from "@/lib/stripe/client";
 import { toast } from "sonner";
@@ -14,51 +14,71 @@ interface ISubscribeButtonUserProps {
   subscription: TGetSubscription;
   mostPopularProduct: BillingPlanCategory;
   product: TGetProductsNonNull[number];
-  price: TGetProductsNonNull[number]['prices'][number]
+  price: TGetProductsNonNull[number]["prices"][number];
 }
 
 export default function SubscribeButtonUser({
   subscription,
   mostPopularProduct,
   product,
-  price
+  price,
 }: ISubscribeButtonUserProps) {
+  const pathName = usePathname();
+  const router = useRouter();
+  const toastId = useId();
 
-  const pathName= usePathname()
-  const router = useRouter()
-  const toastId = useId()
+  const subscribedUser =
+    subscription?.prices?.products?.name?.toLowerCase() ===
+    product.name?.toLowerCase();
 
-  if (!subscription) {
-
-    async function handleStripeCheckout() {
-      toast.loading("Loading...",{id:toastId})
-      const {errorRedirect,sessionId} = await checkoutWithStripe(price)
-
-      if(errorRedirect){
-        console.log(errorRedirect);
-        return router.push(errorRedirect)
-      }
-      toast.error("Request failed")
-      if(!sessionId) {
-        return router.push(getErrorRedirect(pathName,"An unknown error occurred", "Please try again later or contact us."))
-      }
-      toast.error("An unknown error occurred",{id:toastId})
-      
-      const stripe = await getStripe()
-      if(stripe) toast.dismiss(toastId)
-      stripe?.redirectToCheckout({sessionId})
-
+  const buttonLabel = (() => {
+    if (subscribedUser) {
+      return "Manage Subscription";
+    } else if(!subscription){
+      return "Subscribe"
     }
-    return (
-      <Button className="mt-8 w-full font-semibold" onClick={handleStripeCheckout}>
-        Subscribe button which redirects to stripe checkout
-      </Button>
-    );
+    return "Switch Plan";
+  })();
+
+  async function handleStripeCheckout() {
+    toast.loading("Loading...", { id: toastId });
+    const { errorRedirect, sessionId } = await checkoutWithStripe(price);
+
+    if (errorRedirect) {
+      console.log(errorRedirect);
+      return router.push(errorRedirect);
+    }
+    toast.error("Request failed");
+    if (!sessionId) {
+      return router.push(
+        getErrorRedirect(
+          pathName,
+          "An unknown error occurred",
+          "Please try again later or contact us."
+        )
+      );
+    }
+    toast.error("An unknown error occurred", { id: toastId });
+
+    const stripe = await getStripe();
+    if (stripe) toast.dismiss(toastId);
+    stripe?.redirectToCheckout({ sessionId });
+  }
+
+  async function handleStripePortalRequest() {
+    toast.info("Redirecting Stripe Portal...");
+    const redirectUrl = await createStripePortal(pathName);
+    return router.push(redirectUrl);
   }
 
   return (
-    <Button className="mt-8 w-full font-semibold">
-      Already subscribed button Upgrade button
+    <Button
+      className="mt-8 w-full font-semibold"
+      onClick={
+        subscribedUser ? handleStripePortalRequest : handleStripeCheckout
+      }
+    >
+      {buttonLabel}
     </Button>
   );
 }

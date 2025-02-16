@@ -9,6 +9,7 @@ import Replicate from "replicate";
 import { ActionResponse } from "@/lib/helper/actions";
 import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
 import { revalidatePath } from "next/cache";
+import { getCredits } from "./credit-action";
 
 interface ImageResponse {
   error: string | null;
@@ -24,6 +25,16 @@ const replicate = new Replicate({
 export async function generateImageAction(
   input: TImageGenerationValidator
 ): Promise<ImageResponse> {
+
+  const { data: credits } = await getCredits();
+  
+  if (!credits?.image_generation_count || credits.image_generation_count <= 0) {
+    return {
+      data: null,
+      error: "No credits left, please subscribe",
+      success: false,
+    };
+  }
   if (!process.env.REPLICATE_API_TOKEN) {
     return {
       error: "The replicate API token is not set",

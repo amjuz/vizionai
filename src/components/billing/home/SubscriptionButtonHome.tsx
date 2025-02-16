@@ -15,7 +15,7 @@ export default function SubscriptionButtonHome({
 }: ISubscriptionButtonProps) {
   return (
     <Link
-      href={"/auth/signin"}
+      href={"/billing"}
       className={cn(
         "mt-8 w-full font-semibold",
         buttonVariants({

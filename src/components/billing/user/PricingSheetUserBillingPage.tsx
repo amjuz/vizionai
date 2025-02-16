@@ -15,7 +15,7 @@ export default async function PricingSheetUserBillingPage() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={"outline"}>Upgrade</Button>
+        <Button variant={"outline"}>Show all plans</Button>
       </SheetTrigger>
       <SheetContent className={cn("h-[calc(100vh-20%)]")} side={"bottom"}>
         <SheetHeader>

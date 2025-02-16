@@ -17,34 +17,39 @@ export type BillingPageType = "profile" | "home";
 
 interface IUserBillingPlans {
   mostPopularProduct?: BillingPlanCategory;
+  showBillingSwitch?: boolean;
+  showBillingDetail?: boolean;
 }
 
 export default async function UserBillingPlans({
+  showBillingDetail = true,
+  showBillingSwitch = true,
   mostPopularProduct = "pro",
 }: IUserBillingPlans) {
-
   const supabase = await createClient();
   const products = await getProducts(supabase);
   const subscription = await getSubscription(supabase);
 
   return (
     <div className="">
-      <div className="flex items-center justify-center space-x-4 py-8">
-        <Label htmlFor="pricing-switch" className="font-semibold text-base">
-          Monthly
-        </Label>
-        <BillingSwitcher />
-        <Label htmlFor="pricing-switch" className="font-semibold text-base">
-          Yearly
-        </Label>
-      </div>
-      <div className="grid grid-cols-3 place-items-center mx-auto gap-8">
+      {showBillingSwitch ? (
+        <div className="flex items-center justify-center space-x-4 py-8">
+          <Label htmlFor="pricing-switch" className="font-semibold text-base">
+            Monthly
+          </Label>
+          <BillingSwitcher />
+          <Label htmlFor="pricing-switch" className="font-semibold text-base">
+            Yearly
+          </Label>
+        </div>
+      ) : null}
+      <div className="grid grid-cols-3 place-items-center mx-auto gap-8 ">
         {products &&
           products.map((product) => {
             return (
               <div
                 className={cn(
-                  "border bg-background rounded-xl shadow-sm h-fit divide-border divide-y",
+                  "border bg-background rounded-xl shadow-sm h-fit divide-border  divide-y",
                   product.name?.toLowerCase() ===
                     mostPopularProduct.toLowerCase()
                     ? "border-primary bg-background drop-shadow-md scale-105"
@@ -57,7 +62,9 @@ export default async function UserBillingPlans({
                   mostPopularProduct={mostPopularProduct}
                   subscription={subscription}
                 />
-                <PricingDetailsDescription product={product} />
+                {showBillingDetail ? (
+                  <PricingDetailsDescription product={product} />
+                ) : null}
               </div>
             );
           })}
@@ -65,4 +72,33 @@ export default async function UserBillingPlans({
     </div>
   );
 }
-// {pageType === "profile" && <SubscribeButtonProfile subscription={subscription}/>}
+
+// function ShowSubscribedCard({ products }: { products: TGetProducts }) {
+//   return (
+//     <div className="">
+//       {products &&
+//         products.map((product) => {
+//           return (
+//             <div
+//               className={cn(
+//                 "border bg-background rounded-xl shadow-sm h-fit divide-border  divide-y",
+//                 // product.name?.toLowerCase() === mostPopularProduct.toLowerCase()
+//                 //   ? "border-primary bg-background drop-shadow-md scale-105"
+//                 //   : "border-border"
+//               )}
+//               key={product.id}
+//             >
+//               <UserPricingDetails
+//                 product={product}
+//                 mostPopularProduct={mostPopularProduct}
+//                 subscription={subscription}
+//               />
+//               {showBillingDetail ? (
+//                 <PricingDetailsDescription product={product} />
+//               ) : null}
+//             </div>
+//           );
+//         })}
+//     </div>
+//   );
+// }

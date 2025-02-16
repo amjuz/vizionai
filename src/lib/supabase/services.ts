@@ -18,9 +18,9 @@ export async function updateModelStatus({
   modelId: string;
 }) {
   if (!training_time || !version) {
-    console.log(
-      "reached inside first First try block of updating status model"
-    );
+    // console.log(
+    //   "reached inside first First try block of updating status model"
+    // );
 
     try {
       const { data, error } = await supabaseAdminClient
@@ -43,9 +43,9 @@ export async function updateModelStatus({
     }
   }
 
-  console.log("skipped First try block of updating status model");
+  // console.log("skipped First try block of updating status model");
   try {
-    const { data, error } = await supabaseAdminClient
+    const { error } = await supabaseAdminClient
       .from("models")
       .update({
         training_status,
@@ -56,15 +56,15 @@ export async function updateModelStatus({
       .eq("model_id", modelId);
 
     if (error) {
-      console.log("Failed to update model status in database", error);
-    } else if (data) {
-      console.log("update model status successful", data);
+      throw new Error("Failed to update model status in database", error);
     }
+    //  else if (data) {
+    //   console.log("update model status successful", data);
+    // }
 
     return;
   } catch (error) {
-    console.log("Something went wrong", error);
-    return;
+    throw new Error("Something went wrong while updating model training status")
   }
 }
 

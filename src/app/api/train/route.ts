@@ -5,6 +5,25 @@ import Replicate from "replicate";
 
 const DOMAIN = process.env.DOMAIN;
 
+async function validateUserCredits({ userId }: { userId: string }) {
+  const { data: userCredits, error } = await supabaseAdminClient
+    .from("credits")
+    .select("*")
+    .eq("user_id", userId)
+    .single();
+
+  if (error) {
+    throw new Error("Error getting user credits");
+  }
+
+  const credits = userCredits.model_training_count ?? 0;
+
+  if (credits <= 0) {
+    throw new Error("No credits left for training");
+  }
+  return credits;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const replicate = new Replicate({
@@ -47,6 +66,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const oldCredits = await validateUserCredits({ userId: user.id });
+
     const fileName = input.fileKey.replace("training_data_bucket/", "");
     const { data: fileUrl } = await supabaseAdminClient.storage
       .from("training_data_bucket")
@@ -85,9 +106,9 @@ export async function POST(request: NextRequest) {
         },
         webhook: `${DOMAIN}/api/webhooks/train?userId=${
           user.id
-        }&modelId=${encodeURIComponent(
-          modelId
-        )}&fileName=${encodeURIComponent(fileName)}`,
+        }&modelId=${encodeURIComponent(modelId)}&fileName=${encodeURIComponent(
+          fileName
+        )}`,
         webhook_events_filter: ["start", "completed"],
       }
     );
@@ -115,11 +136,20 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       throw new Error(
-        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be store as soon as possible"
+        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be stored as soon as possible"
       );
     }
 
-    console.log("db response for insert operation on models table: ", data);
+    // update credits
+
+    const { error: UpdateCreditsError } = await supabaseAdminClient
+      .from("credits")
+      .update({ model_training_count: oldCredits - 1 })
+      .eq("user_id", user.id);
+
+    if (UpdateCreditsError) {
+      throw new Error("Failed to update credits for model training");
+    }
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {

@@ -12,32 +12,30 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log(
-      "---------------------------STARTING WEBHOOK-----------------------------------"
-    );
-    console.log("received webhook model training status: ", body.status);
+    // console.log(
+    //   "---------------------------STARTING WEBHOOK-----------------------------------"
+    // );
+    // console.log("received webhook model training status: ", body.status);
 
     const url = new URL(request.url);
     const userId = url.searchParams.get("userId") ?? "";
     const modelId = url.searchParams.get("modelId") ?? "";
     const fileName = url.searchParams.get("fileName") ?? "";
 
-    console.log("----------", "/n", "received url params :-", url.searchParams);
+    // console.log("----------", "/n", "received url params :-", url.searchParams);
     // validate the webhook
     const isValid = await validateWebhookSignature({ request, body });
     // console.log(isValid);
 
     if (!isValid) {
-      console.log(
-        "Signature validation failed. Closing the request, status: FAILED"
-      );
+      console.log("Signature validation failed.");
 
       return new NextResponse("Invalid signature", { status: 401 });
     }
 
-    console.log(
-      "Signature validation successful. Fetching user details from database ...."
-    );
+    // console.log(
+    //   "Signature validation successful. Fetching user details from database ...."
+    // );
     const { data: user, error: userError } =
       await supabaseAdminClient.auth.admin.getUserById(userId);
 
@@ -53,27 +51,27 @@ export async function POST(request: NextRequest) {
     const userEmail = user.user.email;
     const userName = user.user.user_metadata.full_name;
 
-    console.log("Received user details :", {
-      email: userEmail,
-      name: userName ?? "name",
-    });
+    // console.log("Received user details :", {
+    //   email: userEmail,
+    //   name: userName ?? "name",
+    // });
 
     if (!userEmail) {
-      console.log(
-        "Failed to complete request as received data contains empty values "
-      );
+      // console.log(
+      //   "Failed to complete request as received data contains empty values "
+      // );
 
       return new NextResponse("Failed to retrieve user name or email", {
         status: 401,
       });
     }
 
-    console.log("Checking body status:", body.status);
+    // console.log("Checking body status:", body.status);
 
     if (body.status === "succeeded") {
-      console.log(
-        "Received status contains success,Initiating email response and update db model status"
-      );
+      // console.log(
+      //   "Received status contains success,Initiating email response and update db model status"
+      // );
 
       await Promise.all([
         // send a successful status email
@@ -97,13 +95,12 @@ export async function POST(request: NextRequest) {
       ]);
     } else {
       // handle the failed and cancelled status
-      console.log(
-        "Received status doesn't contains success,Initiating email response and update db model status"
-      );
+      // console.log(
+      //   "Received status doesn't contains success,Initiating email response and update db model status"
+      // );
 
       await Promise.all([
         // send a training status email
-
         sendEmail({
           emailTemplate: TrainingStatusEmailTemplate({
             userName,
@@ -121,23 +118,45 @@ export async function POST(request: NextRequest) {
         }),
       ]);
     }
+
+    // getting old credits
+    
+    const { data: oldCredits, error } = await supabaseAdminClient
+      .from("credits")
+      .select("model_training_count")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) {
+      throw new Error("Error getting user credits");
+    }
+
+    // updating credits
+    if (oldCredits.model_training_count) {
+      await supabaseAdminClient
+        .from("credits")
+        .update({ model_training_count: oldCredits.model_training_count ?? +1 })
+        .eq("user_id", userId)
+        .single();
+    }
+
     // delete training data from s3bucket
 
-    console.log("Deleting training data from S3...");
+    // console.log("Deleting training data from S3...");
 
     await DeleteTrainingDataFromS3Bucket(`${fileName}`);
 
-    console.log("webhook worked fine", modelId);
+    // console.log("webhook worked fine", modelId);
 
-    console.log("Closing connection");
+    // console.log("Closing connection");
 
-    console.log(
-      "---------------------------END WEBHOOK-----------------------------------"
-    );
+    // console.log(
+    //   "---------------------------END WEBHOOK-----------------------------------"
+    // );
 
-     return new NextResponse("Ok", { status: 200 });
+    return new NextResponse("Ok", { status: 200 });
   } catch (error) {
-    console.log("Webhook processing error", error);
+    // console.log("Webhook processing error", error);
     return new NextResponse("Internal server error", { status: 500 });
   }
 }

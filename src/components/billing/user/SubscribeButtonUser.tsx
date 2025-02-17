@@ -66,7 +66,7 @@ export default function SubscribeButtonUser({
   }
 
   async function handleStripePortalRequest() {
-    toast.info("Redirecting Stripe Portal...");
+    toast.loading("Redirecting Stripe Portal...");
     const redirectUrl = await createStripePortal(pathName);
     return router.push(redirectUrl);
   }

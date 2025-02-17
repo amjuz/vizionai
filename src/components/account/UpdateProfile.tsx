@@ -1,4 +1,4 @@
-import { getUser, TGetUserAuth } from "@/lib/supabase/queries";
+import { getUser } from "@/lib/supabase/queries";
 import {
   Card,
   CardContent,
@@ -9,16 +9,14 @@ import {
 import AccountForm from "./AccountForm";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import UpdateNameForm from "./AccountForm";
 
-// interface IAccountCard {
-//   user: TGetUserAuth;
-// }
-export default async function AccountCard() {
-  const supabase = await createClient()
-  const user = await getUser(supabase)
+export default async function UpdateProfile() {
+  const supabase = await createClient();
+  const user = await getUser(supabase);
 
-  if(!user) {
-    return redirect('/auth/signin')
+  if (!user) {
+    return redirect("/auth/signin");
   }
 
   return (
@@ -28,7 +26,7 @@ export default async function AccountCard() {
         <CardDescription>Update Your personal information</CardDescription>
       </CardHeader>
       <CardContent>
-        <AccountForm user={user}/>
+        <UpdateNameForm user={user} />
       </CardContent>
     </Card>
   );

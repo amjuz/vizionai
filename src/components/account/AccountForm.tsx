@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  AccountFormValidator,
-  TAccountFormValidator,
-} from "@/lib/validators/accountForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -20,20 +16,21 @@ import { Button } from "../ui/button";
 import { TGetUserAuth } from "@/lib/supabase/queries";
 import toast from "react-hot-toast";
 import { updateProfile } from "@/app/actions/auth-actions";
+import { TUpdateNameFormValidator, UpdateNameFormValidator } from "@/lib/validators/updateNameFormValidator";
 
-interface IAccountFormProps {
+interface IUpdateNameFormProps {
   user: TGetUserAuth;
 }
-export default function AccountForm({ user }: IAccountFormProps) {
-  const form = useForm<TAccountFormValidator>({
-    resolver: zodResolver(AccountFormValidator),
+export default function UpdateNameForm({ user }: IUpdateNameFormProps) {
+  const form = useForm<TUpdateNameFormValidator>({
+    resolver: zodResolver(UpdateNameFormValidator),
     defaultValues: {
       email: user?.email,
       fullName: "",
     },
   });
 
-  async function onSubmit({ fullName }: TAccountFormValidator) {
+  async function onSubmit({ fullName }: TUpdateNameFormValidator) {
     // const MutateData = await updateProfile({ full_name: fullName })
     toast.promise(updateProfile({ full_name: fullName }), {
       loading: "Updating Profile",

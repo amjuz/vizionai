@@ -1,6 +1,6 @@
 import { generateImageAction, storeImages } from "@/app/actions/image-action";
 import { TImageGenerationValidator } from "@/components/image-generation/Configuration";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { create } from "zustand";
 
 interface GenerateState {

@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { checkoutWithStripe, createStripePortal } from "@/lib/stripe/server";
 import { getErrorRedirect } from "@/lib/helper/stripe/helper";
 import { getStripe } from "@/lib/stripe/client";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { useId } from "react";
 
 interface ISubscribeButtonUserProps {

@@ -10,7 +10,7 @@ import ModelNameInput from "./form/ModelNameInput";
 import GenderInputRadioBox from "./form/GenderInputRadioBox";
 import FileUploadInputBox from "./form/FileUploadInputBox";
 import { useId } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { getPreSignedStorageUrl } from "@/app/actions/model-actions";
 
 export type TModelTrainingForm = {

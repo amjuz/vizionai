@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useId, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { signup } from "@/app/actions/auth-actions";
 import SignupPrefillButton from "@/lib/helper/components/SignupPrefillButton";
 import { useRouter } from "next/navigation";

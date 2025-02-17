@@ -1,5 +1,6 @@
 "use server";
 
+import { getUser } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -23,7 +24,7 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
   });
 
   if (error) {
-    console.log(error)
+    console.log(error);
     return {
       data: null,
       error: "Signup failed please try again",
@@ -58,4 +59,26 @@ export async function signout(): Promise<void> {
   await supabase.auth.signOut({});
 
   redirect("/");
+}
+
+export async function updateProfile({ full_name }: { full_name: string }) {
+  const supabase = await createClient();
+
+  const user = await getUser(supabase)
+
+  if(!user){
+    throw new Error('Unauthenticated user')
+  }
+   // const { data,error } = await supabase.auth.updateUser({ data: { full_name } });
+  const { data, error} = await supabase.from('users').update({full_name}).eq('id',user?.id)
+  
+  console.log("data",data);
+  console.log("err :", error);
+  
+  
+  if(error) {
+    throw new Error('Update failed, please try again!')
+  }
+
+  return 
 }

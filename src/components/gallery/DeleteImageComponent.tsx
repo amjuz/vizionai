@@ -12,7 +12,7 @@ import {
 import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { useId } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { deleteImageAction } from "@/app/actions/image-action";
 import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
 import { cn } from "@/lib/utils";

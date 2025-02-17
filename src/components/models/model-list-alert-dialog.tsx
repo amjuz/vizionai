@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { useId } from "react";
 import { deleteModel } from "@/app/actions/model-actions";
 import { Database } from "@/types/database.types";

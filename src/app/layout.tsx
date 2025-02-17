@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "sonner";
+import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/lib/react-query/ReactQueryProvider";
 import BillingContextProvider from "@/provider/BillingContextProvider";
 
@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <BillingContextProvider>{children}</BillingContextProvider>
-          <Toaster richColors expand />
+          <Toaster />
         </ReactQueryProvider>
       </body>
     </html>

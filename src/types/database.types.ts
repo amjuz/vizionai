@@ -716,7 +716,7 @@ export type Database = {
       credits: {
         Row: {
           created_at: string
-          id: number
+          id: string
           image_generation_count: number | null
           max_image_generation_count: number | null
           max_model_training_count: number | null
@@ -725,7 +725,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id?: never
+          id?: string
           image_generation_count?: number | null
           max_image_generation_count?: number | null
           max_model_training_count?: number | null
@@ -734,7 +734,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          id?: never
+          id?: string
           image_generation_count?: number | null
           max_image_generation_count?: number | null
           max_model_training_count?: number | null

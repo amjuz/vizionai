@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { signin } from "@/app/actions/auth-actions";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";

@@ -6,10 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import AccountForm from "./AccountForm";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import UpdateNameForm from "./AccountForm";
+import UpdateNameForm from "./UpdateNameForm";
 
 export default async function UpdateProfile() {
   const supabase = await createClient();

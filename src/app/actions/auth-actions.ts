@@ -72,13 +72,27 @@ export async function updateProfile({ full_name }: { full_name: string }) {
    // const { data,error } = await supabase.auth.updateUser({ data: { full_name } });
   const { data, error} = await supabase.from('users').update({full_name}).eq('id',user?.id)
   
-  console.log("data",data);
-  console.log("err :", error);
-  
-  
   if(error) {
     throw new Error('Update failed, please try again!')
   }
 
   return 
+}
+
+export async function updatePassword() {
+  const supabase = await createClient();
+
+  const user = await getUser(supabase)
+
+  if(!user || !user.email){
+    throw new Error('Unauthenticated user')
+  }
+   // const { data,error } = await supabase.auth.updateUser({ data: { full_name } });
+  const { data, error} = await supabase.auth.resetPasswordForEmail(user.email)
+  
+  if(error) {
+    throw new Error('There was error sending the reset password email')
+  }
+
+  return  data
 }

@@ -1,7 +1,5 @@
+import SecuritySettings from "@/components/account/SecuritySettings";
 import UpdateProfile from "@/components/account/UpdateProfile";
-import { getUser } from "@/lib/supabase/queries";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 
 async function page() {
   return (
@@ -14,7 +12,7 @@ async function page() {
       </div>
       <div className="grid gap-8">
         <UpdateProfile />
-        security components
+        <SecuritySettings/>
       </div>
     </section>
   );

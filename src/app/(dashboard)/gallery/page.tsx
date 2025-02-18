@@ -2,7 +2,7 @@ import { getImages } from "@/app/actions/image-action";
 import GalleryComponent, { ImageProps } from "@/components/gallery/GalleryComponent";
 
 const Gallery = async () => {
-  const { data: images } = await getImages();
+  const images = await getImages();
   if(!images) console.log("returned empty image object");
   
   return (

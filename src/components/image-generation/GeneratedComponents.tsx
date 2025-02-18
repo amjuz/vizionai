@@ -11,29 +11,9 @@ import {
 import { useGeneratedStore } from "@/store/useGeneratedStore";
 import Image from "next/image";
 
-// const images = [
-//   {
-//     src: "/hero-images/Charismatic Young Man with a Warm Smile and Stylish Tousled Hair.jpeg",
-//     alt: "some alt text",
-//   },
-//   {
-//     src: "/hero-images/Confident Businesswoman on Turquoise Backdrop.jpeg",
-//     alt: "some alt text",
-//   },
-//   {
-//     src: "/hero-images/Confident Woman in Red Outfit.jpeg",
-//     alt: "some alt text",
-//   },
-//   {
-//     src: "/hero-images/Confident Woman in Urban Setting.jpeg",
-//     alt: "some alt text",
-//   },
-// ];
-
 function GeneratedComponents() {
 
   const images: Array<{url:string}> = useGeneratedStore(state=> state.images)
-  // const loading = useGeneratedStore(state=> state.loading)
 
   if (images.length === 0) {
     return (
@@ -44,7 +24,6 @@ function GeneratedComponents() {
       </Card>
     );
   }
-  
   
   return (
     <Carousel

@@ -7,9 +7,10 @@ import { Database } from "@/types/database.types";
 import { randomUUID } from "crypto";
 import Replicate from "replicate";
 import { ActionResponse } from "@/lib/helper/actions";
-import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
+import { Table, TGeneratedImageID, TGeneratedImageName } from "@/types/index";
 import { revalidatePath } from "next/cache";
 import { getCredits } from "./credit-action";
+import { TGetUserAuth } from "@/lib/supabase/queries";
 
 interface ImageResponse {
   error: string | null;
@@ -25,9 +26,8 @@ const replicate = new Replicate({
 export async function generateImageAction(
   input: TImageGenerationValidator
 ): Promise<ImageResponse> {
-
   const { data: credits } = await getCredits();
-  
+
   if (!credits?.image_generation_count || credits.image_generation_count <= 0) {
     return {
       data: null,
@@ -35,6 +35,7 @@ export async function generateImageAction(
       success: false,
     };
   }
+
   if (!process.env.REPLICATE_API_TOKEN) {
     return {
       error: "The replicate API token is not set",
@@ -197,7 +198,9 @@ export async function storeImages(data: storeImageInput[]) {
   };
 }
 
-export async function getImages(limit?: number): Promise<ActionResponse> {
+export type TGetImages = Awaited<ReturnType<typeof getImages>>;
+
+export async function getImages(limit?: number) {
   const supabase = await createClient();
 
   const {
@@ -205,11 +208,7 @@ export async function getImages(limit?: number): Promise<ActionResponse> {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return {
-      error: "Unauthorized",
-      success: false,
-      data: null,
-    };
+    throw new Error("Authentication failed");
   }
 
   let query = supabase
@@ -225,11 +224,7 @@ export async function getImages(limit?: number): Promise<ActionResponse> {
   const { data, error } = await query;
 
   if (error) {
-    return {
-      error: error.message,
-      success: false,
-      data: null,
-    };
+    throw new Error(`${error.message}`);
   }
 
   const imageWithUrl = await Promise.all(
@@ -252,11 +247,11 @@ export async function getImages(limit?: number): Promise<ActionResponse> {
     )
   );
 
-  return {
-    error: null,
-    success: true,
-    data: imageWithUrl || null,
-  };
+  if (!imageWithUrl) {
+    return null;
+  }
+
+  return imageWithUrl;
 }
 
 export async function deleteImageAction(
@@ -311,4 +306,22 @@ export async function deleteImageAction(
     error: null,
     success: true,
   };
+}
+
+export async function getImageCount({ user }: { user: TGetUserAuth }) {
+  const supabase = await createClient();
+
+  if (!user) {
+    throw new Error("Authentication failed");
+  }
+  const { data, error } = await supabase
+    .from("generated_images")
+    .select("*")
+    .eq("user_id", user.id);
+    
+  if (error) {
+    throw new Error("Failed to fetch model training details");
+  }
+
+  return data?.length;
 }

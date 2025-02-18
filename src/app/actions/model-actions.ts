@@ -1,6 +1,7 @@
 "use server";
 
 import { supabaseAdminClient } from "@/lib/supabase/admin";
+import { TGetUserAuth } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 
 export async function getPreSignedStorageUrl(filePath: string) {
@@ -67,7 +68,7 @@ export async function fetchModel() {
 export async function deleteModel(
   id: number,
   model_id: string,
-  model_version: string | null,
+  model_version: string | null
 ) {
   // console.log("version", model_version);
   // console.log("id", model_id);
@@ -159,4 +160,21 @@ export async function deleteModel(
       success: false,
     };
   }
+}
+
+export async function getModelCount({ user }: { user: TGetUserAuth }) {
+  const supabase = await createClient();
+  if (!user) {
+    throw new Error("Authentication failed");
+  }
+  const { data, error } = await supabase
+    .from("models")
+    .select("*")
+    .eq("user_id", user!.id);
+
+  if (error) {
+    throw new Error("Failed to fetch model training details");
+  }
+  
+  return data?.length;
 }

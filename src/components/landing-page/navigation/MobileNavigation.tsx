@@ -1,5 +1,5 @@
 import { MenuIcon } from "lucide-react";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../../ui/sheet";
 
 export default function MobileNavigation({
   children,

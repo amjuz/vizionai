@@ -25,7 +25,7 @@ Training Data (Zip File) | Read the requirements below
 • Use images of similar age group (ideally within past few months)
 • Provide only zip file (under 45MB size)
 
-
+From
 # Landing Paeg
 
 ## Hero Section

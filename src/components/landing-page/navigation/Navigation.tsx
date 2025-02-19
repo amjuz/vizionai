@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Logo from "../dashboard-layout/Logo";
+import Logo from "../../dashboard-layout/Logo";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "../../ui/button";
 import MobileNavigation from "./MobileNavigation";
 
 const NavItems = () => {

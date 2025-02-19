@@ -2,7 +2,7 @@ import { getCredits } from "@/app/actions/credit-action";
 import {
   getImageCount,
 } from "@/app/actions/image-action";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import {
   ImageIcon,
   LayersIcon,

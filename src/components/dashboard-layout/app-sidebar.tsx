@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Sparkles } from "lucide-react";
 
-import { NavMain } from "@/components/layout-dashboard/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { createClient } from "@/lib/supabase/server";
 import { NavUser } from "./nav-user";
+import { NavMain } from "./nav-main";
 
 export async function AppSidebar({
   ...props

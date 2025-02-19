@@ -1,8 +1,8 @@
 import Image from "next/image";
 import AuthImg from "@/public/Abstract Curves and Colors.jpeg";
-import Logo from "@/components/layout-dashboard/Logo";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import Logo from "@/components/dashboard-layout/Logo";
 
 export default async function AuthenticationLayout({
   children,

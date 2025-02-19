@@ -29,7 +29,7 @@ export default async function HomeBillingPlans({
           Yearly
         </Label>
       </div>
-      <div className="grid grid-cols-3 place-items-center mx-auto gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 place-items-center mx-auto gap-y-8 sm:gap-8 lg:max-w-4xl xl:max-w-none ">
         {products &&
           products.map((product) => {
             return (

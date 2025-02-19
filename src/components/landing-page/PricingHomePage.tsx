@@ -5,7 +5,7 @@ import HomeBillingPlans from "../billing/home/HomeBillingPlan";
 export default async function PricingHomePage() {
   return (
     <section className="flex w-full flex-col items-center justify-center bg-muted">
-      <div className="container mx-auto flex w-full flex-col items-center justify-center space-y-8 py-32">
+      <div className="container px-6 xs:px-8 sm:mx-8 sm:px-0  lg:mx-auto  mx-auto flex w-full flex-col items-center justify-center space-y-8 py-32">
         <div className="flex flex-col items-center justify-center text-center">
           <AnimatedGradientText>
             <span

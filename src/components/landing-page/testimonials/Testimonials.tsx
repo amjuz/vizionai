@@ -90,7 +90,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="flex w-full flex-col items-center justify-center  py-32 "
+      className="px-6 xs:px-8 sm:mx-8 sm:px-0 border lg:mx-auto flex w-full flex-col items-center justify-center  py-32 overflow-hidden"
     >
       <AnimatedGradientText className="bg-background backdrop-blur-0">
         <span

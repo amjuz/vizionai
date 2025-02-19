@@ -1,3 +1,4 @@
+import Faq from "@/components/landing-page/faqs/Faq";
 import Features from "@/components/landing-page/features/Features";
 import HeroSection from "@/components/landing-page/hero/HeroSection";
 import Navigation from "@/components/landing-page/navigation/Navigation";
@@ -12,6 +13,7 @@ export default async function Home() {
       <Features />
       <Testimonials/>
       <PricingHomePage />
+      <Faq/>
     </main>
   );
 }

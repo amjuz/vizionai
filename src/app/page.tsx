@@ -2,6 +2,7 @@ import Features from "@/components/landing-page/features/Features";
 import HeroSection from "@/components/landing-page/hero/HeroSection";
 import Navigation from "@/components/landing-page/navigation/Navigation";
 import PricingHomePage from "@/components/landing-page/PricingHomePage";
+import Testimonials from "@/components/landing-page/testimonials/Testimonials";
 
 export default async function Home() {
   return (
@@ -9,6 +10,7 @@ export default async function Home() {
       <Navigation />
       <HeroSection />
       <Features />
+      <Testimonials/>
       <PricingHomePage />
     </main>
   );

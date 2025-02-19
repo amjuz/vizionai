@@ -12,6 +12,13 @@ body {
   }
 }
 
+.subHeading {
+ @apply text-2xl xs:text-3xl sm:text-4xl font-bold
+}
+
+.subText {
+  @apply text-sm xs:text-base text-muted-foreground lg:max-w-3xl
+}
 @layer base {
   :root {
     /* Core colors - maintaining the warm theme with base hue 25 but in light mode */

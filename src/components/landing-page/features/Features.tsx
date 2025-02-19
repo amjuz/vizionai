@@ -45,7 +45,7 @@ export default function Features() {
           <h2 className="text-2xl font-bold xs:text-3xl sm:text-4xl">
             Unlock Unlimited Possibilities with Vizion AI
           </h2>
-          <p className="text-base text-muted-foreground lg:max-w-[]">
+          <p className="text-base text-muted-foreground lg:max-w-[75%]">
             Our platform offers a wide range of features designed to enhance
             your image creation experience. From easy-to-use editing tools to
             powerful AI-powered image generation, we have everything you need to

@@ -6,6 +6,7 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { MarqueeColumn } from "./MarqueeColumn";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 
 const avatars = [
   {
@@ -77,14 +78,14 @@ export default function HeroSection() {
           </div>
           <span className="text-sm font-medium">Loved by 1k+ customers</span>
         </div>
-        <Link
-          href={"/auth/signin"}
-          className={cn(
-            "",
-            buttonVariants({ className: "rounded-md text-base h-12" })
-          )}
-        >
-          🌟 Create your first AI model 🌟
+        <Link href={"/auth/signin"}>
+          <ShimmerButton
+            className="rounded-md text-base h-12 "
+            borderRadius="0.3rem"
+            shimmerSize="2px"
+          >
+            🌟 Create your first AI model 🌟
+          </ShimmerButton>
         </Link>
       </div>
       <div className="absolute top-0 w-full grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 z-10">

@@ -1,3 +1,5 @@
+import Footer from "@/components/footer.tsx/Footer";
+import Credits from "@/components/landing-page/Credits";
 import Faq from "@/components/landing-page/faqs/Faq";
 import Features from "@/components/landing-page/features/Features";
 import HeroSection from "@/components/landing-page/hero/HeroSection";
@@ -14,6 +16,8 @@ export default async function Home() {
       <Testimonials/>
       <PricingHomePage />
       <Faq/>
+      <Credits/>
+      <Footer/>
     </main>
   );
 }

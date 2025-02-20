@@ -40,7 +40,7 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
         };
       });
 
-      set({ images: dataWithUrl, loading: false });
+      set({ images: dataWithUrl, loading: false, error: error });
 
       toast.success("Image generation successful!", { id: toastId });
 

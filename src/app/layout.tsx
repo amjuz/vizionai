@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <BillingContextProvider>{children}</BillingContextProvider>
-          <Toaster />
+          <Toaster position="bottom-right"/>
         </ReactQueryProvider>
       </body>
     </html>

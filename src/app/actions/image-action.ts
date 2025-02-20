@@ -50,7 +50,7 @@ export async function generateImageAction(
         prompt: input.prompt,
         lora_scale: 1,
         guidance: input.guidance,
-        num_of_outputs: input.num_of_outputs,
+        num_outputs: input.num_of_outputs,
         aspect_ratio: input.aspect_ratio,
         output_format: input.output_format,
         output_quality: input.output_quality,
@@ -63,7 +63,7 @@ export async function generateImageAction(
         go_fast: true,
         guidance: input.guidance,
         megapixels: "1",
-        num_of_outputs: input.num_of_outputs,
+        num_outputs: input.num_of_outputs,
         aspect_ratio: input.aspect_ratio,
         output_format: input.output_format,
         output_quality: input.output_quality,
@@ -76,7 +76,6 @@ export async function generateImageAction(
       input: modelInput,
     });
 
-    // console.log(output);
 
     if (!output) {
       return {
@@ -94,7 +93,7 @@ export async function generateImageAction(
   } catch (error) {
     return {
       //@ts-expect-error error happens due to incorrect type inference, need to refactor
-      error: error.message | null,
+      error: error.message || "Failed to fetch response",
       success: false,
       data: null,
     };

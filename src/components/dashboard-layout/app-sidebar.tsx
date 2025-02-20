@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -12,6 +11,7 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import { NavUser } from "./nav-user";
 import { NavMain } from "./nav-main";
+import Logo from "./Logo";
 
 export async function AppSidebar({
   ...props
@@ -31,7 +31,11 @@ export async function AppSidebar({
         <SidebarMenuButton
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          asChild
         >
+          <Logo />
+          {/* <div className="">
+
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Sparkles className="size-4" />
           </div>
@@ -39,6 +43,7 @@ export async function AppSidebar({
             <span className="truncate font-semibold">Vizion AI</span>
             <span className="truncate text-xs">Pro</span>
           </div>
+          </div> */}
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>

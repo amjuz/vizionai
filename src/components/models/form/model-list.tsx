@@ -39,8 +39,9 @@ function ModelList({ models }: IModelList) {
           <CardDescription>
             You have not trained any models yet. Start by creating a new model.
           </CardDescription>
-          <Link href={"/model-training"} className="inline-block pt-2" />
-          <Button className="mx-auto w-fit">Create Model</Button>
+          <Link href={"/model-training"} className="inline-block pt-2">
+            <Button className="mx-auto w-fit">Create Model</Button>
+          </Link>
         </CardHeader>
       </Card>
     );

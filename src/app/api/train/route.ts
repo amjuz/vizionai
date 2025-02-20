@@ -134,9 +134,9 @@ export async function POST(request: NextRequest) {
         // version: training.version,
       });
 
-    if (error) {
+    if (error) {      
       throw new Error(
-        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be stored as soon as possible",
+        "Model training started but failed to store model! Please wait while we resolve the issue, your model will be stored as soon as possible",
       );
     }
 

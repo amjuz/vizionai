@@ -12,6 +12,7 @@ import FileUploadInputBox from "./form/FileUploadInputBox";
 import { useId } from "react";
 import { toast } from "react-hot-toast";
 import { getPreSignedStorageUrl } from "@/app/actions/model-actions";
+import { isProd } from "@/lib/utils";
 
 export type TModelTrainingForm = {
   form: UseFormReturn<
@@ -45,7 +46,11 @@ function ModelTrainingForm() {
           id: toastId,
         });
       }
-
+      const prod = isProd()
+      if(prod){
+        toast.error('model training feature is disabled.')
+        return
+      }
       const urlResponse = await fetch(url ?? "", {
         method: "PUT",
         headers: {
@@ -79,7 +84,7 @@ function ModelTrainingForm() {
         throw new Error(apiResponseJson.error || "Failed to train model!");
       }
 
-      toast.dismiss("loadingID");
+      toast.dismiss("loadingId");
       toast.success(
         "Training started successfully. You will receive a notification once it gets completed",
         { id: toastId }
@@ -88,7 +93,7 @@ function ModelTrainingForm() {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to start training";
       toast.error(errorMessage, { id: toastId, duration: 5000 });
-      toast.dismiss("loadingID");
+      toast.dismiss("loadingId");
     }
   }
 
@@ -100,7 +105,7 @@ function ModelTrainingForm() {
           <GenderInputRadioBox form={form} />
           <FileUploadInputBox form={form} />
 
-          <Button type="submit" className="w-fit">
+          <Button type="submit" className="w-fit" disabled>
             Submit
           </Button>
         </fieldset>

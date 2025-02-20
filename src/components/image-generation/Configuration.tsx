@@ -133,9 +133,9 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
         : values.prompt,
     };
     await generateImage(newValues);
-    // console.log("res:", res);
   }
-
+  // form.watch("num_of_outputs");
+  // console.log(form.getValues("num_of_outputs"));
   return (
     <TooltipProvider>
       <Form {...form}>

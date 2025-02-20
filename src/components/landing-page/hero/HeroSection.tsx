@@ -1,39 +1,12 @@
 import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
-import { Avatar } from "@/components/ui/avatar";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { MarqueeColumn } from "./MarqueeColumn";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import AvatarSocials from "./AvatarSocials";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
-const avatars = [
-  {
-    src: "/avatars/AutumnTechFocus.jpeg",
-    fallback: "CN",
-  },
-  {
-    src: "/avatars/Casual Creative Professional.jpeg",
-    fallback: "AB",
-  },
-  {
-    src: "/avatars/Golden Hour Contemplation.jpeg",
-    fallback: "FG",
-  },
-  {
-    src: "/avatars/Portrait of a Woman in Rust-Colored Top.jpeg",
-    fallback: "PW",
-  },
-  {
-    src: "/avatars/Radiant Comfort.jpeg",
-    fallback: "RC",
-  },
-  {
-    src: "/avatars/Relaxed Bearded Man with Tattoo at Cozy Cafe.jpeg",
-    fallback: "RB",
-  },
-];
 
 export default function HeroSection() {
   return (
@@ -59,33 +32,15 @@ export default function HeroSection() {
           AI&apos;s state-of-the-art technology ensures you always look your
           best. Create, edit, and generate images effortlessly.
         </p>
-        <div className="flex items-center space-x-2 mb-4">
-          <div className=" flex items-center -space-x-5 sm:-space-x-4 overflow-hidden">
-            {avatars.map((avatar, i) => {
-              return (
-                <Avatar
-                  key={i}
-                  className="inline-block border-2 border-background"
-                >
-                  <AvatarImage
-                    src={avatar.src}
-                    className="h-full object-cover"
-                  />
-                  <AvatarFallback>{avatar.fallback}</AvatarFallback>
-                </Avatar>
-              );
-            })}
-          </div>
-          <span className="text-sm font-medium">Loved by 1k+ customers</span>
-        </div>
+        <AvatarSocials/>
         <Link href={"/auth/signin"}>
-          <ShimmerButton
-            className="rounded-md text-base h-12 "
-            borderRadius="0.3rem"
-            shimmerSize="2px"
+          <InteractiveHoverButton
+            className="rounded-md"
+            // borderRadius="0.3rem"
+            // shimmerSize="2px"
           >
-            🌟 Create your first AI model 🌟
-          </ShimmerButton>
+             Create your first AI model 
+          </InteractiveHoverButton>
         </Link>
       </div>
       <div className="absolute top-0 w-full grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 z-10">

@@ -20,7 +20,7 @@ export default async function RecentImages() {
   }
 
   return (
-    <Card className="col-span-3">
+    <Card className="col-span-full xl:col-span-3">
       <CardHeader>
         <CardTitle>Recent Generations</CardTitle>
       </CardHeader>
@@ -28,7 +28,7 @@ export default async function RecentImages() {
         <Suspense fallback={<>loading...</>}>
           <RecentImagesCarousel images={images} />
         </Suspense>
-        <div className="flex justify-end">
+        <div className="overflow-hidden sm:flex justify-end">
           <Link
             href={"/gallery"}
             className={cn("", buttonVariants({ variant: "outline" }))}

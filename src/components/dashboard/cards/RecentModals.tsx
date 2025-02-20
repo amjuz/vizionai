@@ -9,11 +9,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 interface IRecentModalsProps {
-  models: Table["models"]["Row"][]
+  models: Table["models"]["Row"][];
 }
 export default function RecentModals({ models }: IRecentModalsProps) {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Recent Models</CardTitle>
       </CardHeader>
@@ -34,7 +34,9 @@ export default function RecentModals({ models }: IRecentModalsProps) {
                       {model.gender}
                     </p>
                   </div>
-                  <Badge variant={getStatusVariant(model.training_status)}>{model.training_status}</Badge>
+                  <Badge variant={getStatusVariant(model.training_status)}>
+                    {model.training_status}
+                  </Badge>
                 </div>
               );
             })
@@ -47,11 +49,15 @@ export default function RecentModals({ models }: IRecentModalsProps) {
 
 function getStatusVariant(status: Table["models"]["Row"]["training_status"]) {
   switch (status) {
-    case "succeeded": return 'default'
+    case "succeeded":
+      return "default";
     case "starting":
-    case "processing": return 'secondary'
-    case "canceled": 
-    case "failed": return 'destructive'
-    default: 'secondary'
+    case "processing":
+      return "secondary";
+    case "canceled":
+    case "failed":
+      return "destructive";
+    default:
+      "secondary";
   }
 }

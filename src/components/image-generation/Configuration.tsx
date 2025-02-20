@@ -124,14 +124,14 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
         ? (() => {
             const modelId = values.model.replace("amjuz/", "").split(":")[0];
             const selectedModel = userModels.find(
-              (model) => model.model_id === modelId
+              (model) => model.model_id === modelId,
             );
             return `photo of a ${selectedModel?.trigger_word || "ohwx"} ${
               selectedModel?.gender
             }, ${values.prompt}`;
           })()
         : values.prompt,
-    } 
+    };
     await generateImage(newValues);
     // console.log("res:", res);
   }
@@ -139,19 +139,19 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
   return (
     <TooltipProvider>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-          <fieldset className="grid gap-6 p-4 bg-background rounded-lg border">
-            <legend className="text-sm -ml-1 px-1 font-medium">settings</legend>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <fieldset className="grid gap-6 rounded-lg border bg-background p-4">
+            <legend className="-ml-1 px-1 text-sm font-medium">Settings</legend>
             <FormField
               control={form.control}
               name="model"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex gap-1 items-center">
+                  <FormLabel className="flex items-center gap-1">
                     Model
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="w-4 h-4" />
+                        <Info className="h-4 w-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>You can choose any model from the drop down menu</p>
@@ -183,7 +183,7 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                             >
                               {model.model_name}
                             </SelectItem>
-                          )
+                          ),
                       )}
                     </SelectContent>
                   </Select>
@@ -191,17 +191,17 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               <FormField
                 control={form.control}
                 name="aspect_ratio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex gap-1 items-center">
+                    <FormLabel className="flex items-center gap-1">
                       Aspect ratio
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Aspect ratio for the generated image</p>
@@ -240,11 +240,11 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                 name="num_of_outputs"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex gap-1 items-center">
+                    <FormLabel className="flex items-center gap-1">
                       Number of outputs
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Total number of output images</p>
@@ -270,12 +270,12 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
               name="guidance"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex gap-1 items-center">
+                  <FormLabel className="flex items-center gap-1">
                     <div className="flex items-center justify-center gap-2">
                       Guidance
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Guidance for generated images</p>
@@ -309,7 +309,7 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                       Number of inference steps
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>
@@ -350,7 +350,7 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                       Output Quality
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>
@@ -388,7 +388,7 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                       Output format
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Format of the output image</p>
@@ -426,7 +426,7 @@ const Configuration = ({ modelId, userModels }: IConfiguration) => {
                       Prompt
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="w-4 h-4" />
+                          <Info className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Prompt for generated images</p>

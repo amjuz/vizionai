@@ -11,11 +11,9 @@ import { buttonVariants } from "@/components/ui/button";
 export default async function RecentImages() {
   const images: TGetImages = await getImages();
 
-  if (!images) {
+  if (!images || !images.length) {
     return (
-      <Suspense fallback={<>loading...</>}>
-        <RecentImagesFallbackCard />;
-      </Suspense>
+        <RecentImagesFallbackCard />
     );
   }
 

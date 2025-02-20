@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import {
   getProducts,
   getSubscription,
-  TGetProducts,
 } from "@/lib/supabase/queries";
 // import PricingDetailsDescription from "./PricingDetailsDescription";
 // import BillingSwitcher from "../billing/BillingSwitcher";

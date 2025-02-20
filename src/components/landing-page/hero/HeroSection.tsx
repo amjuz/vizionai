@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { MarqueeColumn } from "./MarqueeColumn";
-import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import AvatarSocials from "./AvatarSocials";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 

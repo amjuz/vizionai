@@ -64,6 +64,8 @@ export async function updateModelStatus({
 
     return;
   } catch (error) {
+    console.log('update model failed',error);
+    
     throw new Error("Something went wrong while updating model training status")
   }
 }

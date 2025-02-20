@@ -1,4 +1,3 @@
-import Stripe from "stripe";
 import { stripe } from "@/lib/stripe/config";
 import {
   deletePriceRecord,
@@ -8,6 +7,7 @@ import {
   upsertPriceRecord,
   upsertProductRecord,
 } from "@/lib/supabase/admin";
+import Stripe from "stripe";
 
 const relevantEvents = new Set([
   "product.created",
@@ -62,30 +62,37 @@ export async function POST(req: Request) {
           await manageSubscriptionStatusChange(
             subscription.id,
             subscription.customer as string,
-            event.type === "customer.subscription.created"
+            event.type === "customer.subscription.created",
           );
           break;
         case "checkout.session.completed":
           const checkoutSession = event.data.object as Stripe.Checkout.Session;
-          console.log(
-            "metadata:",checkoutSession.metadata
-          );
+          console.log("metadata:", checkoutSession.metadata);
           if (checkoutSession.mode === "subscription") {
             const subscriptionId = checkoutSession.subscription;
 
             await manageSubscriptionStatusChange(
               subscriptionId as string,
               checkoutSession.customer as string,
-              true
+              true,
             );
           }
           if (
             checkoutSession.status === "complete" &&
             checkoutSession.payment_status === "paid"
           ) {
+            const data = checkoutSession.metadata as {
+              [x: string]: string;
+              image_generation_count: string;
+              model_training_count: string;
+            };
+
             await updateUserCredits(
               checkoutSession.client_reference_id as string,
-              checkoutSession.metadata as any
+              {
+                image_generation_count: parseInt(data.image_generation_count),
+                model_training_count: parseInt(data.image_generation_count),
+              },
             );
           }
           break;
@@ -98,7 +105,7 @@ export async function POST(req: Request) {
         "Webhook handler failed. View your Next.js function logs.",
         {
           status: 400,
-        }
+        },
       );
     }
   } else {

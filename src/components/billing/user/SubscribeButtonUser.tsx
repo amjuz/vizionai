@@ -1,6 +1,5 @@
 "use client";
 import { TGetSubscription } from "@/lib/supabase/queries";
-import { BillingPlanCategory } from "./UserBillingPlans";
 import { TGetProductsNonNull } from "./UserPricingDetails";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,14 +11,14 @@ import { useId } from "react";
 
 interface ISubscribeButtonUserProps {
   subscription: TGetSubscription;
-  mostPopularProduct: BillingPlanCategory;
+  // mostPopularProduct: BillingPlanCategory;
   product: TGetProductsNonNull[number];
   price: TGetProductsNonNull[number]["prices"][number];
 }
 
 export default function SubscribeButtonUser({
   subscription,
-  mostPopularProduct,
+  // mostPopularProduct,
   product,
   price,
 }: ISubscribeButtonUserProps) {

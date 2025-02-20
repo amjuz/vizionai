@@ -1,5 +1,4 @@
 import { TGetImages } from "@/app/actions/image-action";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,

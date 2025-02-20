@@ -156,7 +156,7 @@ export async function POST(request: NextRequest) {
 
     return new NextResponse("Ok", { status: 200 });
   } catch (error) {
-    // console.log("Webhook processing error", error);
+    console.log("Webhook processing error", error);
     return new NextResponse("Internal server error", { status: 500 });
   }
 }

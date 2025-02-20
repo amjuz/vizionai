@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         {
           error: "Unauthorized",
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         {
           error: "Missing required fields!",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -107,10 +107,10 @@ export async function POST(request: NextRequest) {
         webhook: `${DOMAIN}/api/webhooks/train?userId=${
           user.id
         }&modelId=${encodeURIComponent(modelId)}&fileName=${encodeURIComponent(
-          fileName
+          fileName,
         )}`,
         webhook_events_filter: ["start", "completed"],
-      }
+      },
     );
 
     if (training.error) {
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
       });
     }
     // console.log("training", training);
-    const { error, data } = await supabaseAdminClient
+    const { error } = await supabaseAdminClient
       .from("models")
       // @ts-expect-error  typescript inference error
       .insert({
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       throw new Error(
-        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be stored as soon as possible"
+        "Model training started but failed to store model! Please wait while we resolve the issue, you'r model will be stored as soon as possible",
       );
     }
 
@@ -165,7 +165,7 @@ export async function POST(request: NextRequest) {
       {
         error: errorMessage,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

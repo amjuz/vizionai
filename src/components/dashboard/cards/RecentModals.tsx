@@ -2,7 +2,6 @@ import { Table } from "@/types";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "../../ui/card";
@@ -11,6 +10,22 @@ import { Badge } from "@/components/ui/badge";
 interface IRecentModalsProps {
   models: Table["models"]["Row"][];
 }
+
+function getStatusVariant(status: Table["models"]["Row"]["training_status"]) {
+  switch (status) {
+    case "succeeded":
+      return "default";
+    case "starting":
+    case "processing":
+      return "secondary";
+    case "canceled":
+    case "failed":
+      return "destructive";
+    default:
+      return "secondary";
+  }
+}
+
 export default function RecentModals({ models }: IRecentModalsProps) {
   return (
     <Card className="w-full">
@@ -47,17 +62,4 @@ export default function RecentModals({ models }: IRecentModalsProps) {
   );
 }
 
-function getStatusVariant(status: Table["models"]["Row"]["training_status"]) {
-  switch (status) {
-    case "succeeded":
-      return "default";
-    case "starting":
-    case "processing":
-      return "secondary";
-    case "canceled":
-    case "failed":
-      return "destructive";
-    default:
-      "secondary";
-  }
-}
+

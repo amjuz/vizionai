@@ -7,7 +7,7 @@ import { Database } from "@/types/database.types";
 import { randomUUID } from "crypto";
 import Replicate from "replicate";
 import { ActionResponse } from "@/lib/helper/actions";
-import { Table, TGeneratedImageID, TGeneratedImageName } from "@/types/index";
+import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
 import { revalidatePath } from "next/cache";
 import { getCredits } from "./credit-action";
 import { TGetUserAuth } from "@/lib/supabase/queries";
@@ -24,7 +24,7 @@ const replicate = new Replicate({
 });
 
 export async function generateImageAction(
-  input: TImageGenerationValidator
+  input: TImageGenerationValidator,
 ): Promise<ImageResponse> {
   const { data: credits } = await getCredits();
 
@@ -230,7 +230,7 @@ export async function getImages(limit?: number) {
   const imageWithUrl = await Promise.all(
     data.map(
       async (
-        image: Database["public"]["Tables"]["generated_images"]["Row"]
+        image: Database["public"]["Tables"]["generated_images"]["Row"],
       ) => {
         const { data, error } = await supabase.storage
           .from("generated_images_bucket")
@@ -243,8 +243,8 @@ export async function getImages(limit?: number) {
           ...image,
           url: data?.signedUrl,
         };
-      }
-    )
+      },
+    ),
   );
 
   if (!imageWithUrl) {
@@ -256,7 +256,7 @@ export async function getImages(limit?: number) {
 
 export async function deleteImageAction(
   id: TGeneratedImageID,
-  name: TGeneratedImageName
+  name: TGeneratedImageName,
 ): Promise<ActionResponse> {
   const supabase = await createClient();
 
@@ -280,7 +280,7 @@ export async function deleteImageAction(
   if (error) {
     console.log(
       `Failed to delete image { id: ${id} } of user :${user.id}`,
-      error.message
+      error.message,
     );
     return {
       data: null,
@@ -295,7 +295,7 @@ export async function deleteImageAction(
 
   if (ErrorRemoveImageFromS3) {
     console.log(
-      `Failed to remove image with name: ${name} of user : ${user.id} from s# bucket`
+      `Failed to remove image with name: ${name} of user : ${user.id} from s# bucket`,
     );
   }
 
@@ -318,7 +318,7 @@ export async function getImageCount({ user }: { user: TGetUserAuth }) {
     .from("generated_images")
     .select("*")
     .eq("user_id", user.id);
-    
+
   if (error) {
     throw new Error("Failed to fetch model training details");
   }

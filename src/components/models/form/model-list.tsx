@@ -40,13 +40,13 @@ function ModelList({ models }: IModelList) {
             You have not trained any models yet. Start by creating a new model.
           </CardDescription>
           <Link href={"/model-training"} className="inline-block pt-2" />
-          <Button className="w-fit mx-auto">Create Model</Button>
+          <Button className="mx-auto w-fit">Create Model</Button>
         </CardHeader>
       </Card>
     );
   }
   return (
-    <div className="grid gap-6 grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
       {data.map((model, index) => (
         <Card
           className="relative flex flex-col overflow-hidden"
@@ -59,18 +59,18 @@ function ModelList({ models }: IModelList) {
               <div className="flex items-center gap-2">
                 {model.training_status === "succeeded" ? (
                   <div className="flex items-center gap-1 text-sm text-green-500">
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="h-4 w-4" />
                     <span className="capitalize">Ready</span>
                   </div>
                 ) : model.training_status === "failed" ||
                   model.training_status === "canceled" ? (
                   <div className="flex items-center gap-1 text-sm text-red-500">
-                    <XCircle className="w-4 h-4" />
+                    <XCircle className="h-4 w-4" />
                     <span className="capitalize">{model.training_status}</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1 text-sm text-yellow-500">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                     <span className="capitalize">Training</span>
                   </div>
                 )}
@@ -93,9 +93,9 @@ function ModelList({ models }: IModelList) {
             <CardContent className="flex-1 p-0 pt-3">
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-lg bg-muted px-3 py-2 ">
+                  <div className="rounded-lg bg-muted px-3 py-2">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
+                      <Clock className="h-4 w-4" />
                       <span>Training Duration</span>
                     </div>
                     <p className="mt-1 font-medium">
@@ -103,9 +103,9 @@ function ModelList({ models }: IModelList) {
                     </p>
                   </div>
 
-                  <div className="rounded-lg bg-muted px-3 py-2 ">
+                  <div className="rounded-lg bg-muted px-3 py-2">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <User2 className="w-4 h-4" />
+                      <User2 className="h-4 w-4" />
                       <span>Gender</span>
                     </div>
                     <p className="mt-1 font-medium">{model.gender}</p>
@@ -113,7 +113,7 @@ function ModelList({ models }: IModelList) {
                 </div>
               </div>
             </CardContent>
-            <div className="pt-4 ">
+            <div className="pt-4">
               <Link
                 href={
                   model.training_status === "succeeded"
@@ -121,9 +121,9 @@ function ModelList({ models }: IModelList) {
                     : "#"
                 }
                 className={cn(
-                  "inline-flex w-full group",
+                  "group inline-flex w-full",
                   model.training_status !== "succeeded" &&
-                    "pointer-events-none opacity-50"
+                    "pointer-events-none opacity-50",
                 )}
               >
                 <Button
@@ -131,7 +131,7 @@ function ModelList({ models }: IModelList) {
                   disabled={model.training_status !== "succeeded"}
                 >
                   Generated Images
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>

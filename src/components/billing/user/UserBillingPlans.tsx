@@ -43,17 +43,17 @@ export default async function UserBillingPlans({
           </Label>
         </div>
       ) : null}
-      <div className="grid grid-cols-3 place-items-center mx-auto gap-8 ">
+      <div className="flex flex-col items-center justify-center xl:grid xl:grid-cols-3 place-items-center mx-auto gap-8 ">
         {products &&
           products.map((product) => {
             return (
               <div
                 className={cn(
-                  "border bg-background rounded-xl shadow-sm h-fit divide-border  divide-y",
-                  product.name?.toLowerCase() ===
-                    mostPopularProduct.toLowerCase()
-                    ? "border-primary bg-background drop-shadow-md scale-105"
-                    : "border-border"
+                  "border bg-background rounded-xl shadow-sm h-fit divide-border divide-y w-full",
+                  // product.name?.toLowerCase() ===
+                  //   mostPopularProduct.toLowerCase()
+                  //   ? "border-primary bg-background drop-shadow-md scale-105"
+                  //   : "border-border"
                 )}
                 key={product.id}
               >

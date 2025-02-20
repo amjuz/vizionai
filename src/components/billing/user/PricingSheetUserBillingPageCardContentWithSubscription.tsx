@@ -28,15 +28,15 @@ export default function PricingSheetUserBillingPageCardContentWithSubscription({
     max_model_training_count,
   } = credits;
   return (
-    <div className="px-5 py-4 pb-1 ">
+    <div className="md:px-5 py-4 md:pb-1 ">
       <h3 className="pb-4 text-base font-semibold flex flex-wrap items-center gap-x-2">
         <span>Plan Summary</span>
         <Badge variant={"secondary"} className="bg-primary/10">
           {products?.name ?? "--"} Plan
         </Badge>
       </h3>
-      <div className="grid grid-cols-8 gap-4">
-        <div className="col-span-5 flex flex-col pr-12">
+      <div className="grid grid-cols-3 xl:grid-cols-8 gap-4">
+        <div className="col-span-5 flex flex-col md:pr-12">
           <div className="flex-1 text-xs font-normal flex w-full justify-between pb-1">
             <span className="font-semibold text-base">
               {image_generation_count} / {max_image_generation_count}
@@ -56,7 +56,7 @@ export default function PricingSheetUserBillingPageCardContentWithSubscription({
           </div>
         </div>
 
-        <div className="col-span-5 flex flex-col pr-12">
+        <div className="col-span-5 flex flex-col md:pr-12">
           <div className="flex-1 text-xs font-normal flex w-full justify-between pb-1">
             <span className="font-semibold">
               {model_training_count} / {max_model_training_count}
@@ -76,7 +76,7 @@ export default function PricingSheetUserBillingPageCardContentWithSubscription({
           </div>
         </div>
 
-        <div className="col-span-3 flex flex-row justify-between flex-wrap ">
+        <div className="col-span-3 flex flex-col justify-center md:flex-row md:justify-between flex-wrap gap-4">
           <div className="flex flex-col pb-0">
             <div className="text-sm font-normal">Price/Month</div>
             <div className="flex-1 pt-1 text-sm font-medium">{priceString}</div>

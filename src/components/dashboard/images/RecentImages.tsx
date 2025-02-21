@@ -1,4 +1,4 @@
-import { getImages, TGetImages } from "@/app/actions/image-action";
+import {  TGetImages } from "@/app/actions/image-action";
 import RecentImagesFallbackCard from "./RecentImagesFallbackCard";
 import { Suspense } from "react";
 import RecentImagesCarousel from "./RecentImagesCarousel";
@@ -7,9 +7,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { getImagesDto } from "@/lib/services/dto/image";
 
 export default async function RecentImages() {
-  const images: TGetImages = await getImages();
+  const images: TGetImages = await getImagesDto();
 
   if (!images || !images.length) {
     return (

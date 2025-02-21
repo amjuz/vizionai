@@ -1,3 +1,4 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "./database.types";
 
 export type TGeneratedImageID =
@@ -20,4 +21,8 @@ export type Price = Table['prices']['Row']
 
 export type Subscription = Table['subscriptions']['Row'] 
 
-export type AuthUser = Database['auth']['Tables']['users']['Row']
+export type DbClient = SupabaseClient<Database>
+
+export type AuthTable = Database['auth']['Tables']
+
+export type AuthUser = AuthTable['users']['Row']

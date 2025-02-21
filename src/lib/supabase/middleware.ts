@@ -40,16 +40,16 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getSession();
 
   const publicPaths = [
-    "/",
+    // "/",
     "/auth/signin",
     "/auth/signup",
     "/api/webhooks/train",
     "/api/webhooks/stripe",
   ];
 
-  const isPublicPath = publicPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  const isPublicPath = 
+  request.nextUrl.pathname === "/" || 
+  publicPaths.some((path) => request.nextUrl.pathname.startsWith(path));
 
   if (!session && !isPublicPath) {
     // no user, potentially respond by redirecting the user to the login page

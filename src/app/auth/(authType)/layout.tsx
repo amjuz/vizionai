@@ -16,22 +16,22 @@ export default async function AuthenticationLayout({
   } = await supabase.auth.getSession();
   if (session) redirect("/dashboard");
   return (
-    <main className="h-screen grid grid-cols-2 ">
-      <div className="relative w-full flex  p-10 flex-col bg-muted text-primary-foreground">
-        <div className="absolute w-full  h-[30%] top-0 left-0 z-10 bg-gradient-to-t from-transparent to-black" />
-        <div className="absolute w-full  h-[30%] bottom-0 left-0 z-10 bg-gradient-to-b from-transparent to-black" />
+    <main className="flex flex-col xl:grid h-screen  xl:grid-cols-2">
+      <div className="relative flex w-full flex-col bg-muted p-10 text-primary-foreground">
+        <div className="absolute left-0 top-0 z-10 h-[30%] w-full bg-gradient-to-t from-transparent to-black" />
+        <div className="absolute bottom-0 left-0 z-10 h-[30%] w-full bg-gradient-to-b from-transparent to-black" />
         <Image
           fill
           src={AuthImg}
           alt="login form"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
           priority
           sizes="100"
         />
-        <div className="relative z-20 flex items-center ">
+        <div className="relative z-20 flex items-center">
           <Logo />
         </div>
-        <div className="relative z-20 mt-auto ">
+        <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
               &ldquo;Vizion AI is a game changer for me. I have been able to
@@ -42,8 +42,8 @@ export default async function AuthenticationLayout({
           </blockquote>
         </div>
       </div>
-      <div className="relative flex flex-col items-center justify-center p-8 h-full w-full">
-        <div className="max-w-xl w-[350px] mx-auto ">{children}</div>
+      <div className="relative flex h-full w-full flex-col items-center justify-center p-8">
+        <div className="mx-auto w-[350px] max-w-xl">{children}</div>
       </div>
     </main>
   );

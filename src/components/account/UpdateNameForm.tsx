@@ -13,19 +13,19 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { TGetUserAuth } from "@/lib/supabase/queries";
 import toast from "react-hot-toast";
 import { updateProfile } from "@/app/actions/auth-actions";
 import { TUpdateNameFormValidator, UpdateNameFormValidator } from "@/lib/validators/updateNameFormValidator";
+import { User } from "@supabase/supabase-js";
 
 interface IUpdateNameFormProps {
-  user: TGetUserAuth;
+  user: User 
 }
 export default function UpdateNameForm({ user }: IUpdateNameFormProps) {
   const form = useForm<TUpdateNameFormValidator>({
     resolver: zodResolver(UpdateNameFormValidator),
     defaultValues: {
-      email: user?.email,
+      email: user.email,
       fullName: "",
     },
   });

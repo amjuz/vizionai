@@ -307,20 +307,3 @@ export async function deleteImageAction(
   };
 }
 
-export async function getImageCount({ user }: { user: TGetUserAuth }) {
-  const supabase = await createClient();
-
-  if (!user) {
-    throw new Error("Authentication failed");
-  }
-  const { data, error } = await supabase
-    .from("generated_images")
-    .select("*")
-    .eq("user_id", user.id);
-
-  if (error) {
-    throw new Error("Failed to fetch model training details");
-  }
-
-  return data?.length;
-}

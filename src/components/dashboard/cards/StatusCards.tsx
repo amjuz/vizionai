@@ -1,32 +1,29 @@
-import { getCredits } from "@/app/actions/credit-action";
-import {
-  getImageCount,
-} from "@/app/actions/image-action";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import {
-  ImageIcon,
-  LayersIcon,
-  Wallet,
-  ZapIcon,
-} from "lucide-react";
+import { ImageIcon, LayersIcon, Wallet, ZapIcon } from "lucide-react";
 import { TGetUserAuth } from "@/lib/supabase/queries";
-import { getModelCount } from "@/app/actions/model-actions";
+import { getImageCount } from "@/lib/services/dto/image";
+import { getModelCount } from "@/lib/services/dto/model";
+import { getCreditsDto } from "@/lib/services/dto/credits";
+import { createClient } from "@/lib/supabase/server";
+import { DbClient } from "@/types";
 
 interface IStatusCards {
   user: TGetUserAuth;
+  client: DbClient
 }
 export default async function StatusCards({ user }: IStatusCards) {
+  const client = await createClient();
   const [imageCount, modelCount, { data: creditsData }] = await Promise.all([
-    getImageCount({ user }),
-    getModelCount({ user }),
-    getCredits(),
+    getImageCount({ user },client),
+    getModelCount({ user },client),
+    getCreditsDto({ user },client),
   ]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className=" text-sm font-medium">Total Images</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Images</CardTitle>
           <ImageIcon className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
@@ -38,7 +35,7 @@ export default async function StatusCards({ user }: IStatusCards) {
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className=" text-sm font-medium">Total Models</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Models</CardTitle>
           <LayersIcon className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
@@ -48,7 +45,7 @@ export default async function StatusCards({ user }: IStatusCards) {
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className=" text-sm font-medium">Image Credits</CardTitle>
+          <CardTitle className="text-sm font-medium">Image Credits</CardTitle>
           <ZapIcon className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
@@ -63,7 +60,7 @@ export default async function StatusCards({ user }: IStatusCards) {
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className=" text-sm font-medium">
+          <CardTitle className="text-sm font-medium">
             Training Credits
           </CardTitle>
           <Wallet className="h-4 w-4 text-muted-foreground" />

@@ -3,25 +3,27 @@ import Logo from "../../dashboard-layout/Logo";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../../ui/button";
 import MobileNavigation from "./MobileNavigation";
+import ThemeSwitcher from "./theme-switcher";
 
 const NavItems = () => {
   return (
     <>
+      <ThemeSwitcher />
       <Link
         href={"#features"}
-        className="text-sm font-medium hover:underline underline-offset-4"
+        className="text-sm font-medium underline-offset-4 hover:underline"
       >
         Features
       </Link>
       <Link
         href={"#pricing"}
-        className="text-sm font-medium hover:underline underline-offset-4"
+        className="text-sm font-medium underline-offset-4 hover:underline"
       >
         Pricing
       </Link>
       <Link
         href={"#faqs"}
-        className="text-sm font-medium hover:underline underline-offset-4"
+        className="text-sm font-medium underline-offset-4 hover:underline"
       >
         FAQs
       </Link>
@@ -29,7 +31,7 @@ const NavItems = () => {
         href={"/auth/signup"}
         className={cn(
           "text-sm font-medium underline-offset-4",
-          buttonVariants({ variant: "default" })
+          buttonVariants({ variant: "default" }),
         )}
       >
         Sign up
@@ -39,17 +41,17 @@ const NavItems = () => {
 };
 export default function Navigation() {
   return (
-    <div className="w-full bg-background/60 backdrop-blur-md fixed top-0 px-8 py-4 z-50 shadow-xl overflow-hidden">
-      <header className="container mx-auto flex items-center">
+    <div className="fixed top-0 z-50 w-full overflow-hidden bg-background/60 px-8 py-4 shadow-xl backdrop-blur-md">
+      <nav className="container mx-auto flex items-center">
         <Logo />
-        <nav className="ml-auto hidden md:flex items-center justify-center gap-6 ">
+        <div className="ml-auto hidden items-center justify-center gap-6 md:flex">
           <NavItems />
-        </nav>
+        </div>
         {/* mobile navigation */}
         <MobileNavigation>
           <NavItems />
         </MobileNavigation>
-      </header>
+      </nav>
     </div>
   );
 }

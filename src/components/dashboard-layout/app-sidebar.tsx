@@ -34,16 +34,6 @@ export async function AppSidebar({
           asChild
         >
           <Logo />
-          {/* <div className="">
-
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <Sparkles className="size-4" />
-          </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Vizion AI</span>
-            <span className="truncate text-xs">Pro</span>
-          </div>
-          </div> */}
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>

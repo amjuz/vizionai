@@ -16,7 +16,7 @@ interface IRecentImagesProps {
 export default async function RecentImages({ client }: IRecentImagesProps) {
   const images: TGetImages = await getImagesDto({ client });
 
-  if (!images) {
+  if (!images?.length) {
     return <RecentImagesFallbackCard />;
   }
 

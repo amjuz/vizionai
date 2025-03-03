@@ -24,7 +24,7 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
   });
 
   if (error) {
-    console.log(error);
+    // console.log(error);
     return {
       data: null,
       error: "Signup failed please try again",
@@ -53,12 +53,22 @@ export async function signin(formData: FormData): Promise<AuthResponse> {
   };
 }
 
-export async function signout(): Promise<void> {
+export async function signout() {
   const supabase = await createClient();
 
-  await supabase.auth.signOut({});
+  const { error } = await supabase.auth.signOut({});
 
-  redirect("/");
+  if (error) {
+    return {
+      error,
+      success: false,
+    };
+  }
+
+  return {
+    error: null,
+    success: true,
+  };
 }
 
 export async function updateProfile({ full_name }: { full_name: string }) {

@@ -73,9 +73,9 @@ function SignUpForm({ className }: { className?: string }) {
     signUpFormData.append("email", values.email);
     signUpFormData.append("password", values.password);
 
-    const { error } = await signup(signUpFormData);
-
-    if (error) {
+    const { error, data } = await signup(signUpFormData);
+    
+    if (error || !data) {
       setLoading(false);
       toast.error(error, { id: signupToastId });
       return ;

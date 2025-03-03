@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/lib/react-query/ReactQueryProvider";
 import BillingContextProvider from "@/provider/BillingContextProvider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,13 +28,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <ReactQueryProvider>
-          <BillingContextProvider>{children}</BillingContextProvider>
-          <Toaster position="bottom-right"/>
+          <BillingContextProvider>
+            <ThemeProvider
+              attribute={"class"}
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </BillingContextProvider>
+          <Toaster position="bottom-right" />
         </ReactQueryProvider>
       </body>
     </html>

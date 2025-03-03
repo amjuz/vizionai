@@ -10,22 +10,15 @@ export type TGetUserDetails = Awaited<ReturnType<typeof getUserDetails>>;
 
 export const getUser = async (supabase: DbClient) => {
   const {
-    data:{user},
-    error
+    data: { user },
+    error,
   } = await supabase.auth.getUser();
 
-  if (error && error instanceof AuthError) {
-    redirect('/auth/signin')
-    // return {
-    //   data: null,
-    //   error: {
-    //     message: "User authentication failed",
-    //   },
-    // };
+  if (error && error instanceof AuthError || !user) {
+    redirect("/auth/signin");
   }
 
-  return user
-  
+  return user;
 };
 export const getSubscription = cache(async (supabase: DbClient) => {
   const { data: subscription } = await supabase

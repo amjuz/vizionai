@@ -16,7 +16,7 @@ export default function Credits() {
           </p>
           <div className="pt-5">
             <Link
-              href={"/auth/signin"}
+              href={"/auth/login"}
               className={cn(
                 buttonVariants({
                   className: "h-12 rounded-md text-base",

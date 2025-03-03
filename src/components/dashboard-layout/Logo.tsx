@@ -1,6 +1,5 @@
 // import { Eye } from "lucide-react";
 import Link from "next/link";
-
 import React from "react";
 
 interface LogoProps {
@@ -14,8 +13,8 @@ const Logo: React.FC<LogoProps> = ({
   className = "",
   variant = "default",
 }) => {
-  const baseColor =
-    variant === "glowing" ? "rgb(245, 158, 11)" : "rgb(161, 98, 7)";
+  // const baseColor =
+  //   variant === "glowing" ? "rgb(245, 158, 11)" : "rgb(161, 98, 7)";
   const containerSize = size * 1.5;
 
   return (

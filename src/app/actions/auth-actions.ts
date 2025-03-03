@@ -2,7 +2,6 @@
 
 import { getUser } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 
 interface AuthResponse {
   error: null | string;

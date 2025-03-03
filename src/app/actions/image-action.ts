@@ -10,7 +10,6 @@ import { ActionResponse } from "@/lib/helper/actions";
 import { TGeneratedImageID, TGeneratedImageName } from "@/types/index";
 import { revalidatePath } from "next/cache";
 import { getCredits } from "./credit-action";
-import { TGetUserAuth } from "@/lib/supabase/queries";
 
 interface ImageResponse {
   error: string | null;

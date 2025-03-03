@@ -7,15 +7,11 @@ import {
   CardTitle,
 } from "../ui/card";
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import UpdateNameForm from "./UpdateNameForm";
 
 export default async function UpdateProfile() {
   const supabase = await createClient();
   const user = await getUser(supabase);
-  if (!user) {
-    return redirect("/auth/signin");
-  }
 
   return (
     <Card>

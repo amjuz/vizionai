@@ -73,14 +73,21 @@ const data: TNavMain = {
 };
 
 export function NavMain() {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <SidebarGroup>
       <SidebarMenu>
         {data.items.map((item) => (
-          <Link href={item.url} key={item.title} className={cn("rounded-sm",
-            pathname === item.url ? 'text-primary bg-primary/5' : 'text-muted-foreground'
-          )}>
+          <Link
+            href={item.url}
+            key={item.title}
+            className={cn(
+              "rounded-sm",
+              pathname === item.url
+                ? "bg-primary font-semibold text-secondary hover:bg-primary dark:border dark:bg-primary/50 dark:text-primary-foreground"
+                : "text-muted-foreground",
+            )}
+          >
             <SidebarMenuItem>
               <SidebarMenuButton tooltip={item.title}>
                 {item.icon && <item.icon />}

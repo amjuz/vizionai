@@ -1,11 +1,13 @@
-import { TGetUserAuth } from "@/lib/supabase/queries";
+import { getUser, TGetUserAuth } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 import { DbClient } from "@/types";
-import { Database } from "@/types/database.types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export async function getModelCount({ user }: { user: TGetUserAuth }, client?: SupabaseClient) {
-  const supabase = client ?? await createClient();
+export async function getModelCount(
+  { user,client }: { user: TGetUserAuth , client?: SupabaseClient},
+  
+) {
+  const supabase = client ?? (await createClient());
   if (!user) {
     throw new Error("Authentication failed");
   }
@@ -21,39 +23,17 @@ export async function getModelCount({ user }: { user: TGetUserAuth }, client?: S
   return data?.length;
 }
 
-export async function fetchModelDto(supabase:DbClient) {
-  
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
+export async function fetchModelDto(supabase: DbClient) {
+  const user = await getUser(supabase);
+  const { data, error } = await supabase
+    .from("models")
+    .select("*", { count: "exact" })
+    .eq("user_id", user?.id)
+    .order("created_at", { ascending: false });
 
-    if (authError || !user) {
-      return {
-        data: null,
-        error: "Authentication failed!",
-        success: false,
-      };
-    }
-  
-    const { data, error } = await supabase
-      .from("models")
-      .select("*", { count: "exact" })
-      .eq("user_id", user?.id)
-      .order("created_at", { ascending: false });
-  
-    if (error) {
-      return {
-        data: null,
-        error: "Failed to fetch models data",
-        success: false,
-      };
-    }
-  
-    return {
-      data,
-      error,
-      success: true,
-    };
+  if (error) {
+    throw new Error("Failed to fetch model training details");
   }
-  
+
+  return data
+}

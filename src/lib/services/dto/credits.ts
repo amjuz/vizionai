@@ -2,7 +2,7 @@ import { TGetUserAuth } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export async function getCreditsDto({ user }: { user: TGetUserAuth },client?: SupabaseClient) {
+export async function getCreditsDto({ user, client }: { user: TGetUserAuth , client?: SupabaseClient}) {
   const supabase = client ?? await createClient();
 
   if (!user) {

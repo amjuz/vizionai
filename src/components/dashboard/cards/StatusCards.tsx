@@ -2,21 +2,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { ImageIcon, LayersIcon, Wallet, ZapIcon } from "lucide-react";
 import { TGetUserAuth } from "@/lib/supabase/queries";
 import { getImageCount } from "@/lib/services/dto/image";
-import { getModelCount } from "@/lib/services/dto/model";
 import { getCreditsDto } from "@/lib/services/dto/credits";
-import { createClient } from "@/lib/supabase/server";
 import { DbClient } from "@/types";
+import { getModelCount } from "@/lib/services/dto/model";
 
 interface IStatusCards {
   user: TGetUserAuth;
-  client: DbClient
+  client: DbClient;
 }
-export default async function StatusCards({ user }: IStatusCards) {
-  const client = await createClient();
+export default async function StatusCards({ user, client }: IStatusCards) {
   const [imageCount, modelCount, { data: creditsData }] = await Promise.all([
-    getImageCount({ user },client),
-    getModelCount({ user },client),
-    getCreditsDto({ user },client),
+    getImageCount({ user, client }),
+    getModelCount({ user, client }),
+    getCreditsDto({ user, client }),
   ]);
 
   return (

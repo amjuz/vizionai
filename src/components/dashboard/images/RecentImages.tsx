@@ -1,4 +1,4 @@
-import {  TGetImages } from "@/app/actions/image-action";
+import { TGetImages } from "@/app/actions/image-action";
 import RecentImagesFallbackCard from "./RecentImagesFallbackCard";
 import { Suspense } from "react";
 import RecentImagesCarousel from "./RecentImagesCarousel";
@@ -8,14 +8,16 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { getImagesDto } from "@/lib/services/dto/image";
+import { SupabaseClient } from "@supabase/supabase-js";
 
-export default async function RecentImages() {
-  const images: TGetImages = await getImagesDto();
+interface IRecentImagesProps {
+  client: SupabaseClient;
+}
+export default async function RecentImages({ client }: IRecentImagesProps) {
+  const images: TGetImages = await getImagesDto({ client });
 
-  if (!images || !images.length) {
-    return (
-        <RecentImagesFallbackCard />
-    );
+  if (!images) {
+    return <RecentImagesFallbackCard />;
   }
 
   return (
@@ -27,12 +29,12 @@ export default async function RecentImages() {
         <Suspense fallback={<>loading...</>}>
           <RecentImagesCarousel images={images} />
         </Suspense>
-        <div className="overflow-hidden sm:flex justify-end">
+        <div className="justify-end overflow-hidden sm:flex">
           <Link
             href={"/gallery"}
             className={cn("", buttonVariants({ variant: "outline" }))}
           >
-            View Gallery <ArrowRight className="ml-2 w-4 h-4" />
+            View Gallery <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </div>
       </CardContent>

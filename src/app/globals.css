@@ -4,6 +4,9 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  transition-property: opacity background transform filter;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
 }
 
 @media (min-width: 1536px) {
@@ -12,16 +15,23 @@ body {
   }
 }
 
+.page-transition {
+  opacity: 0;
+  background: black;
+  transform: translateY(40px);
+  filter: blur(12px);
+}
+
 .subHeading {
- @apply text-2xl xs:text-3xl sm:text-4xl font-bold
+  @apply text-2xl font-bold xs:text-3xl sm:text-4xl;
 }
 
 .subText {
-  @apply text-sm xs:text-base text-muted-foreground lg:max-w-3xl
+  @apply text-sm text-muted-foreground xs:text-base lg:max-w-3xl;
 }
 
-@media(min-width: 1536px) {
-  .container{
+@media (min-width: 1536px) {
+  .container {
     max-width: 1400px;
   }
 }

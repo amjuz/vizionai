@@ -6,15 +6,7 @@ INSERT INTO
         "metadata",
         "price_id",
         "quantity",
-        "cancel_at_period_end",
-        "created",
-        "current_period_start",
-        "current_period_end",
-        "ended_at",
-        "cancel_at",
-        "canceled_at",
-        "trial_start",
-        "trial_end"
+        "cancel_at_period_end"
     )
 VALUES
     (
@@ -24,13 +16,5 @@ VALUES
         '{}',
         'price_1QrG2M4Fl9vqGlimfStpINrI',
         '1',
-        'false',
-        '2025-02-18 05:03:25+00',
-        '2025-02-21 05:03:00+00',
-        '2025-03-21 05:03:00+00',
-        null,
-        null,
-        null,
-        '2025-02-18 05:03:25+00',
-        '2025-02-21 05:03:00+00'
+        'false'
     );

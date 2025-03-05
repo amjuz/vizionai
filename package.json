@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "seed:images:s3": "tsx ./scripts/s3.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -39,6 +40,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.2",
     "form": "^0.2.5",
     "image-meta": "^0.2.1",
@@ -56,6 +58,7 @@
     "stripe": "^17.6.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "vaul": "^1.1.2",
     "zod": "^3.24.1",
     "zustand": "^5.0.3"
@@ -69,7 +72,7 @@
     "postcss": "^8",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   },
   "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
 }

@@ -49,14 +49,12 @@ enabled = true
 # Supports glob patterns relative to supabase directory: './seeds/*.sql'
 sql_paths = [
     './seed/auth.sql',
-    './seed/sessions.sql',
-    './seed/refresh_tokens.sql',
-    # './seed/users.sql',
     './seed/products.sql',
     './seed/prices.sql',
-    './seed/subscriptions.sql',
     './seed/credits.sql',
     './seed/customers.sql',
+    './seed/subscriptions.sql',
+    './seed/s3Bucket.sql',
 ]
 
 [realtime]

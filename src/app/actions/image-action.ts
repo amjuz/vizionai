@@ -43,6 +43,14 @@ export async function generateImageAction(
     };
   }
 
+  if (!input.prompt) {
+    return {
+      data: null,
+      error: "Please provide a prompt to generate images",
+      success: false,
+    };
+  }
+
   const modelInput = input.model.startsWith("amjuz/")
     ? {
         model: "dev",
@@ -74,7 +82,6 @@ export async function generateImageAction(
     const output = await replicate.run(input.model as `${string}/${string}`, {
       input: modelInput,
     });
-
 
     if (!output) {
       return {
@@ -305,4 +312,3 @@ export async function deleteImageAction(
     success: true,
   };
 }
-

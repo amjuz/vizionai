@@ -18,19 +18,18 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
   generateImage: async (values: TImageGenerationValidator) => {
     set({ loading: true, error: null });
 
-    const toastId = "generatedImageToastId"
+    const toastId = "generatedImageToastId";
     toast.loading("Generating image...", { id: toastId });
 
     try {
       const { data, error, success } = await generateImageAction(values);
-      // console.log({ data, error, success });
-      // console.log(error);
-      
+
       if (!success) {
         set({ error, loading: false });
         toast.error(`${error}`, { id: toastId });
+        return
       }
-      
+
       const newData: string[] = data as string[];
 
       const dataWithUrl = newData.map((url) => {
@@ -47,7 +46,7 @@ export const useGeneratedStore = create<GenerateState>((set) => ({
       await storeImages(dataWithUrl);
       toast.success("Image stored Successfully!");
     } catch (e) {
-      console.log('Failed to generate image');
+      console.log("Failed to generate image");
 
       set({
         error: "Failed to generate image. Please try again.",

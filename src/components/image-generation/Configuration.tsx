@@ -45,9 +45,14 @@ export type TImageGenerationValidator = z.infer<
 export const ImageGenerationValidator = z.object({
   model: z.string({ required_error: "Model is required!" }),
   // enum(modelType, { required_error: "Model is required field" }),
-  prompt: z.string({
-    required_error: "Prompt is required!",
-  }),
+  prompt: z
+    .string({
+      required_error: "Prompt is required!",
+    })
+    .min(8, { message: "Prompt too short" })
+    .max(1000, {
+      message: "Prompt too long",
+    }),
   guidance: z
     .number({
       required_error: "Guidance scale is required!",

@@ -23,21 +23,21 @@ export default function RecentImagesCarousel({
             <div className="space-y-2">
               <div
                 className={cn(
-                  "relative overflow-hidden rounded-lg ",
-                  item.height && item.width
-                    ? `aspect-[${item.width}/${item.height}]`
-                    : "aspect-square"
+                  "overflow-hidden rounded-lg aspect-square"
+                  // item.height && item.width
+                  //   ? `aspect-[${item.width}/${item.height}]`
+                  //   : "aspect-square"
                 )}
               >
                 <Image
                   src={item.url ?? ""}
                   alt={item.prompt ?? ""}
-                  width={item.width ?? 720}
-                  height={item.height ?? 480}
-                  className="object-cover"
+                  width={720}
+                  height={480}
+                  className="object-cover h-full"
                 />
               </div>
-              <p className="text-muted-foreground text-sm line-clamp-2">{item.prompt}</p>
+              <p className="text-muted-foreground  text-lg font-semibold line-clamp-2">{item.prompt}</p>
             </div>
           </CarouselItem>
         ))}
